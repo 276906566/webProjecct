@@ -1,0 +1,53 @@
+﻿{include file='public/header' /}
+<body style='background:#eeeeee url(__STATIC__/index/images/bg.jpg) repeat scroll 0% 0%'>
+	<div id='contain' style='width:1002px;margin:0px auto;padding:0px'>
+		{include file='public/top' /}
+		<div id='content' style='width:1002px;height:470px;background:url(__STATIC__/index/images/cbg.png) repeat-y;margin:0px auto'>
+			{include file='public/navLeft' /}
+			{include file='public/location' /}
+			<!-- 职位翻页检索 -->
+			<div id='pdv_16855' class='pdv_class'  title='' style='width:714px;height:357px;top:82px;left:249px; z-index:5'>
+				<div id='spdv_16855' class='pdv_content' style='overflow:visible;width:100%;'>
+					<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+						<div style="height:25px;margin:1px;display:none;background:;">
+							<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+							</div>
+							<div style="float:right;margin-right:10px;display:none">
+								<a href="-1" style="line-height:25px;color:">更多</a>
+							</div>
+						</div>
+						<div style="padding:0px">
+							<link href="__STATIC__/index/css/jobquery.css" rel="stylesheet" type="text/css" />
+							<div id="jobquery">
+								<ul >
+									<li class="cap">
+										<div class="bt"><strong>招聘职位</strong></div>
+										<div class="cl"><strong>详情</strong></div>
+										<div class="au"><strong>招聘人数</strong></div>
+										<div class="bk"><strong>工作地点</strong></div>
+									</li>
+								</ul>
+								<ul class="queryul">
+									{volist name="jobList" id="vo"}
+									<li>
+										<div class="bt"><a href="{:url('Job/apply',['id'=>$vo['id']])}" target="_self" >{$vo.position}</a></div>
+										<div class="cl"><a href="{:url('Job/apply',['id'=>$vo['id']])}" target="_self" >详情</a></div>
+										<div class="au">{$vo.number}</div>
+										<div class="bk">{$vo.place}</div>
+									</li>
+									{/volist}
+								</ul>
+							</div>
+							<div id="showpages">
+								  
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{include file='public/bottom' /}
+	</div>
+	{include file='public/extend' /}
+</body>
+</html>

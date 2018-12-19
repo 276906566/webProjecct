@@ -1,0 +1,34 @@
+﻿{include file='public/title' /}
+<body>
+{include file='public/header' /}
+
+{include file='public/menu' /}
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 数据管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+			<table class="table">
+				<tr>
+					<td width="120" class="va-t">
+						<ul id="treeDemo" class="ztree"></ul>
+					</td>  
+					<td class="va-t">
+						<iframe ID="testIframe" Name="testIframe" frameborder=0 SCROLLING=AUTO width=100%  height=390px SRC="{:url('Trade/reload')}"></iframe>
+					</td>
+				</tr>
+			</table>
+		</article>
+	</div>
+</section>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

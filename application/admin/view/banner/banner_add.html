@@ -1,0 +1,155 @@
+{include file='public/title' /}
+<body>
+<div class="page-container">
+	<form class="form form-horizontal" id="form-article-add" enctype="multipart/form-data" method="post" action="{:url('Banner/add')}">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片标题：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="title" name="title">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="tag" class="select" id="tag">
+					<option value="-1" selected="true">请选择</option>
+					{volist name="type" id="vo"}
+					<option value="{$vo.controller}">{$vo.title}</option>
+					{/volist}
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>子类名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="type" class="select" id="typeid">
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">链接地址：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="link" name="link">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发布日期：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{ $dp.$D(\'datemax\')||\'%y-%M-%d\' }'})" id="datemin" name="start_time" class="input-text Wdate">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>结束日期：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{ $dp.$D(\'datemin\') }'})" id="datemax" name="end_time" class="input-text Wdate">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">产品摘要：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="keywords" name="keywords">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">备注信息：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="des" id="des" cols="" rows="" class="textarea"  placeholder="" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="uploader-thum-container">
+					<div id="fileList" class="uploader-list"></div>
+					 <input type="file" name="image" id="image" />
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="button" id="add_btn"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script>
+	$("#tag").change(function()
+	{
+		var baseData = $("#tag").val();
+		var arr = {$tempsontype};
+	    $("#typeid").empty();
+		for(var i = 0,n;n = arr[i]; i++)
+		{
+			if(baseData == n.controller)
+			{
+				var option = $("<option>").val(n.order).text(n.title);
+	      		$("#typeid").append(option);
+			}
+		}
+		var maxIndex=document.getElementById("typeid").options.length;
+		if(maxIndex == 0)
+		{
+			var option = $("<option>").val(0).text('无子项');
+	      	$("#typeid").append(option);
+			$("#typeid").attr("disabled","disabled");  
+		}
+		else
+		{
+			$("#typeid").removeAttr("disabled");  
+		}
+	});
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        $("#add_btn").click(function()
+        {
+        	var option1 = $("#tag option:selected").val();
+    		var option2 = $("#typeid option:selected").val();
+        	if($("#image").val() == "" ||$("#link").val() == "" ||$("#title").val() == "" || option1 == '-1' || option2 == 0)
+            {
+                alert("请上传文件或完善信息");
+                return;
+            }
+            event.preventDefault();
+            var form  =document.getElementById('form-article-add'),
+            formdata =  new FormData(form);
+            $.ajax({
+                url :"{:url('Banner/add')}",
+                type:"POST",
+                data:formdata,
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success :function(data)
+                {
+                    if(data.code==200)
+                    {
+                        layer.msg(data.msg, {icon: 6, time: 1000}); //消息弹层1秒后消失
+						var timer1=window.setInterval(function()
+	                    {
+	                        window.clearInterval(timer1);
+	                        window.location.reload();                //重新加载页面,显示所有数据
+	                    },1010);        		
+                    }
+                    if(data.code==400)
+                	{
+                        layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+                        window.location.href="javascript:location.replace(location.href);";
+                    }
+                },
+            });
+        });
+    });
+</script>
+</body>
+</html>

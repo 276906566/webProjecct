@@ -1,0 +1,265 @@
+﻿{include file='public/title' /}
+<body>
+{include file='public/header' /}
+{include file='public/menu' /}
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb">
+		<i class="Hui-iconfont">&#xe67f;</i><a href="{:url('Index/index')}" class="maincolor">首页</a><span class="c-gray en">&gt;</span> 产品分类 <span class="c-gray en">&gt;</span> 分类管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<div class="Hui-article">
+		<div class="pd-20 text-c">
+			<div class="cl pd-5 bg-1 bk-gray mt-20"> 
+				<span class="l">
+					{if condition="$Think.session.menu_permission.ProductCate['4'] eq '1'"}
+					<a href="javascript:;" onclick="datareset()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量恢复</a>{/if}
+					{if condition="$Think.session.menu_permission.ProductCate['1'] eq '1'"}
+					<a href="javascript:;" onclick="product_category_add('添加标签','{:url("ProductCate/cateAdd")}','800','400')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加标签</a>
+					{/if}
+				</span> 
+				<span class="r">共有数据：<strong>{$count}</strong> 条</span> 
+			</div>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort ">
+					<thead>
+						<tr class="text-c">
+							<th width="80">序号</th>
+							<th width="80">排序</th>
+							<th>栏目名称</th>
+							<th width="80">控制器</th>
+							<th width="80">方法</th>
+							<th width="80">解锁/锁定</th>
+							<th width="80">显示/隐藏</th>
+							<th width="140">控制</th>
+						</tr>
+					</thead>
+					<tbody>
+						{volist name='cate' id='vo'}
+						<tr class="text-c">
+							<td>{$vo.mid}</td>
+							<td>{$vo.order}</td>
+							<td class="text-l" >{$vo.cate_title}</td>
+							<td>{$vo.controller}</td>
+							<td>{$vo.method}</td>
+							<td class="td-status">
+								{if condition="$vo.status eq '解锁'"}
+									<span class="label label-success radius">{$vo.status}</span>
+								{else /}
+									<span class="label label-default radius">{$vo.status}</span>
+								{/if}
+							</td>
+							<td>
+								{if condition="$vo.ishidden eq '显示'"}
+									<span class="label label-success radius">{$vo.ishidden}</span>
+								{else /}
+									<span class="label label-default radius">{$vo.ishidden}</span>
+								{/if}
+							</td>
+							<td class="f-14">
+								{if condition="$Think.session.menu_permission.ProductCate['6'] eq '1'"}
+								{if condition="$vo.status eq '解锁'"}
+									<a style="text-decoration:none" onClick="product_category_stop(this,{$vo.mid})" href="javascript:;" title="锁定"><i class="Hui-iconfont">&#xe60e;&nbsp;&nbsp;</i></a> 
+								{else /}
+									<a style="text-decoration:none" onClick="product_category_start(this,{$vo.mid})" href="javascript:;" title="解锁" ><i class="Hui-iconfont">&#xe63f;&nbsp;&nbsp;</i></a>
+								{/if}
+								{/if}
+								{if condition="$Think.session.menu_permission.ProductCate['5'] eq '1'"}
+								{if condition="$vo.ishidden eq '显示'"}
+									<a style="text-decoration:none" onClick="product_category_hidden(this,{$vo.mid})" href="javascript:;" title="隐藏"><i class="Hui-iconfont">&#xe631;&nbsp;&nbsp;</i></a> 
+								{else /}
+									<a style="text-decoration:none" onClick="product_category_show(this,{$vo.mid})" href="javascript:;" title="显示" ><i class="Hui-iconfont">&#xe615;&nbsp;&nbsp;</i></a>
+								{/if}
+								{/if}
+								{if condition="$Think.session.menu_permission.ProductCate['3'] eq '1'"}
+								<a title="编辑" href="javascript:;" onclick="product_category_edit('标签编辑','{:url("ProductCate/edit",["id"=>$vo["mid"]])}','1','800','450')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> 
+								{/if}
+								{if condition="$Think.session.menu_permission.ProductCate['2'] eq '1'"}
+								<a title="删除" href="javascript:;" onclick="product_category_del(this,{$vo.mid})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+								{/if}
+							</td>
+						</tr>
+						{/volist}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+/*系统-栏目-添加*/
+function product_category_add(title,url,w,h)
+{
+	layer_show(title,url,w,h);
+}
+/*系统-栏目-编辑*/
+function product_category_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+
+function datareset()
+{
+	layer.confirm('确认要恢复吗？', function(){
+		//$(selector).get(url,data,success(response,status,xhr),dataType)
+		$.get(
+			"{:url('ProductCate/reset')}",
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					layer.msg(data.msg, {icon: 6, time: 1000}); //消息弹层1秒后消失
+					var timer1=window.setInterval(function()
+                     {
+                        window.clearInterval(timer1);
+                        window.location.reload();                //重新加载页面,显示所有数据
+                     },1010);        			
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			},'json'
+		);
+	});
+}
+
+/*系统-栏目-删除*/
+function product_category_del(obj,id)
+{
+	layer.confirm('确认要删除吗？',function(index)
+	{
+		//$(selector).get(url,data,success(response,status,xhr),dataType)
+		$.get(
+			"{:url('ProductCate/delete')}",
+			{id:id},
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					$(obj).parents("tr").remove();
+					window.location.reload();                //重新加载页面,显示所有数据
+					layer.msg(data.msg,{icon:6,time:1000});
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			}
+		);
+	});
+}
+
+function product_category_hidden(obj,id)
+{
+	layer.confirm('确认要隐藏吗？',function(index)
+	{
+		//$(selector).get(url,data,success(response,status,xhr),dataType)
+		$.get(
+			"{:url('ProductCate/setIshidden')}",
+			{id:id},
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					$(obj).parents("tr").find(".td-manage").prepend('<a onClick="product_category_show(this,'+id+')" href="javascript:;" title="显示" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;&nbsp;&nbsp;</i></a>');
+					$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">隐藏</span>');
+					$(obj).remove();
+					window.location.reload();                //重新加载页面,显示所有数据
+					layer.msg(data.msg,{icon: 6,time:1000});
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			}
+		);
+	});
+}
+
+function product_category_show(obj,id)
+{
+	layer.confirm('确认要显示吗？',function(index)
+	{
+		//$(selector).get(url,data,success(response,status,xhr),dataType)
+		$.get(
+			"{:url('ProductCate/setIshidden')}",
+			{id:id},
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					$(obj).parents("tr").find(".td-manage").prepend('<a onClick="product_category_stop(this,'+id+')" href="javascript:;" title="隐藏" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;&nbsp;&nbsp;</i></a>');
+					$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">显示</span>');
+					$(obj).remove();
+					window.location.reload();                //重新加载页面,显示所有数据
+					layer.msg(data.msg, {icon: 6,time:1000});
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			}
+		);
+	});
+}
+
+
+function product_category_stop(obj,id)
+{
+	layer.confirm('确认要锁定吗？',function(index)
+	{
+		//$(selector).get(url,data,success(response,status,xhr),dataType)
+		$.get(
+			"{:url('ProductCate/setStatus')}",
+			{id:id},
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					$(obj).parents("tr").find(".td-manage").prepend('<a onClick="product_category_start(this,'+id+')" href="javascript:;" title="解锁" style="text-decoration:none"><i class="Hui-iconfont">&#xe63f;&nbsp;&nbsp;</i></a>');
+					$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">锁定</span>');
+					$(obj).remove();
+					window.location.reload();                //重新加载页面,显示所有数据
+					layer.msg(data.msg,{icon: 6,time:1000});
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			}
+		);
+	});
+}
+
+function product_category_start(obj,id)
+{
+	layer.confirm('确认要解锁吗？',function(index)
+	{
+		//$(selector).get(url,data,success(response,status,xhr),dataType)
+		$.get(
+			"{:url('ProductCate/setStatus')}",
+			{id:id},
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					$(obj).parents("tr").find(".td-manage").prepend('<a onClick="product_category_stop(this,'+id+')" href="javascript:;" title="锁定" style="text-decoration:none"><i class="Hui-iconfont">&#xe60e;&nbsp;&nbsp;</i></a>');
+					$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">解锁</span>');
+					$(obj).remove();
+					window.location.reload();                //重新加载页面,显示所有数据
+					layer.msg(data.msg, {icon: 6,time:1000});
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			}
+		);
+	});
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

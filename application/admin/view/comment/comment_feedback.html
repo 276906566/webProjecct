@@ -1,0 +1,84 @@
+{include file='public/title'}
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-feedback">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"></span>主题：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width: 580px;">
+				<input type="text" class="input-text" value="{$sdata.title}" name="title" id="title" readonly="true">
+				<input type="text" class="input-text" value="{$sdata.id}" name="fid" id="fid" hidden="true">
+			</div>
+		</div>
+		<div class="row cl" >
+			<label class="form-label col-xs-4 col-sm-3">内容：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="position: relative; width: 550px;">
+				<pre style="display:block; visibility:hidden;"><span>{$sdata.content}</span><br></pre>
+				<textarea name="textarea1" id="textarea1" class="textarea" readonly="true" style="position:absolute; top:0; height:100%;">{$sdata.content}</textarea>
+			</div>
+		</div>
+		{volist name="datalist" id="vo"}
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">管理员处理结果：<br/>{$vo.update_time}</label>
+			<div class="formControls col-xs-8 col-sm-9" style="position: relative; width: 550px;">
+				<pre style="display:block; visibility:hidden;"><span>{$vo.message}</span><br></pre>
+				<textarea name="textarea1" id="textarea1" class="textarea" readonly="true" style="position:absolute; top:0; height:100%;">{$vo.message}</textarea>
+			</div>
+		</div>
+		{/volist}
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">处理过程：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width:580px;">
+				<textarea name="content" id="content" cols="" rows="" class="textarea"  placeholder=""></textarea>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="button" id="feedback_btn"><i class="Hui-iconfont">&#xe632;</i> 确定</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script>
+</script>
+<script type="text/javascript">
+	$(function(){
+    $("#feedback_btn").click(function()
+    {
+        if($("textarea[name=content]").val() == "")
+        {
+            alert("请完善信息");
+            return;
+        }
+        $.ajax({
+	        dataType:"json",
+            url :"{:url('Comment/save')}",
+            type:"POST",
+            data:$('form').serialize(),
+            dataType:"json",
+            success :function(data)
+            {
+                if(data.code==200)
+                {
+                    layer.msg(data.msg, {icon: 6, time: 1000}); //消息弹层1秒后消失
+					var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.reload();                //重新加载页面,显示所有数据
+                    },1010);        		
+                }
+                if(data.code==400)
+            	{
+                    layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+                    window.location.href="javascript:location.replace(location.href);";
+                }
+            },
+        });
+    });
+});
+</script> 
+</body>
+</html>

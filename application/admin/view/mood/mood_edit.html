@@ -1,0 +1,109 @@
+﻿{include file='public/title' /}
+<body>
+<article class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form_mood_edit" enctype="multipart/form-data" method="post">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">心情名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="ID" id="ID" value="{$data.ID}" hidden>
+				<input type="text" class="input-text" value="{$data.NAME}" placeholder="百度" id="NAME" name="NAME">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图片路径：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$data.PIC}" id="PIC" name="PIC" readonly="true">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">心情图片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="uploader-thum-container">
+					 <input type="file" name="image" id="image" />
+				</div>
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">是否启用：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				{if condition="$data.USE eq '0'"}
+				<div class="radio-box">
+					<input type="radio" id="use1" name="USE"  value="1">
+					<label>是</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="use2" name="USE" value="0" checked>
+					<label>否</label>
+				</div>
+				{else /}
+				<div class="radio-box">
+					<input type="radio" id="use1" name="USE"  value="1" checked>
+					<label>是</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="use2" name="USE" value="0">
+					<label>否</label>
+				</div>
+				{/if}
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button id="btn_submit" class="btn btn-primary radius" type="submit">
+					<i class="Hui-iconfont">&#xe632;</i> 保存
+				</button>
+			</div>
+		</div>
+	</form>
+</article>
+{include file='public/footer' /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script>
+	//防止用户无数据提交;每次修改触发此函数
+	$("#form_mood_edit").change(function()
+	{
+		$("#btn_submit").removeClass('disabled');
+	});
+
+	$("#btn_submit").click(function()
+	{
+		event.preventDefault();
+        var form  =document.getElementById('form_mood_edit'),
+        formdata =  new FormData(form);
+
+		$("#btn_submit").attr("disabled",true);
+		$.ajax({
+			type:"POST",
+			url:"{:url('Mood/update')}",
+			data:formdata,
+			dataType:"json",
+			processData:false,
+            contentType:false,
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+</script> 
+</body>
+</html>

@@ -1,0 +1,193 @@
+﻿{include file='public/header' /}
+<body style='background:#eeeeee url(__STATIC__/index/images/bg.jpg) repeat scroll 0% 0%'>
+	<div id='contain' style='width:1002px;margin:0px auto;padding:0px'>
+		{include file='public/top' /}
+		<div id='content' style='width:1002px;height:438px;background:url(__STATIC__/index/images/cbg.png) repeat-y;margin:0px auto'>
+			<!-- 空白边框 -->
+			<div id='pdv_17103' class='pdv_class'  title='公司简介' style='width:567px;height:34px;top:12px;left:26px; z-index:7'>
+				<div id='spdv_17103' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+					<div class="pdv_border" style="border:0px;height:100%;padding:0;margin:0;background:url(__STATIC__/index/images/title.png) 0 0 no-repeat">
+						<div style="height:32px;border:0px;padding:0;margin:0;">
+	    					<div style="float:left;width:99px;color:#505050;font:14px/32px 'microsoft yahei',simsun;text-align:center;">
+	    						公司简介
+	    					</div>
+							<div style="float:right;text-align:right;width:45px;height:32px;background:url(__STATIC__/index/images/title.png) -955px 0px no-repeat;">
+								<a href="{:url('Company/index?id=3')}" style="display:inline;">
+									<img src="__STATIC__/index/images/more.png" style="border:0px;padding-top:15px;">
+								</a>
+							</div>
+						</div>
+						<div style="margin:0px;padding:0px">
+							&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 自定图片(原尺寸) -->
+			<div id='pdv_17102' class='pdv_class'  title='图片' style='width:208px;height:141px;top:66px;left:31px; z-index:6'>
+				<div id='spdv_17102' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+					<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+						<div style="height:25px;margin:1px;display:none;background:;">
+							<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+								图片
+							</div>
+							<div style="float:right;margin-right:10px;display:none">
+								<a href="-1" style="line-height:25px;color:">更多</a>
+							</div>
+						</div>
+						<div style="padding:0px">
+							{if condition="$companyArticle"}
+							<img src="__STATIC__/index/picture/Company/{$companyArticle.image}" border="0" width="208px" height="141px"/>
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 自定义文本(缩进) -->
+			<div id='pdv_17098' class='pdv_class'  title='' style='width:340px;height:154px;top:63px;left:254px; z-index:4'>
+				<div id='spdv_17098' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+					<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+						<div style="height:25px;margin:1px;display:none;background:;">
+							<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+							</div>
+							<div style="float:right;margin-right:10px;display:none">
+								<a href="-1" style="line-height:25px;color:">更多</a>
+							</div>
+						</div>
+						<div style="padding:0px">
+							<div style="padding:0px;color:#505050;font:12px/22px simsun, Arial;text-indent:2em">
+								{$companyArticle.content}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 空白边框 -->
+			<div id='pdv_17107' class='pdv_class'  title='新闻动态' style='width:348px;height:37px;top:12px;left:627px; z-index:13'>
+				<div id='spdv_17107' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+					<div class="pdv_border" style="border:0px;height:100%;padding:0;margin:0;background:url(__STATIC__/index/images/title.png) 0 0 no-repeat">
+						<div style="height:32px;border:0px;padding:0;margin:0;">
+	    					<div style="float:left;width:99px;color:#505050;font:14px/32px 'microsoft yahei',simsun;text-align:center;">
+	    						新闻动态
+	    					</div>
+							<div style="float:right;text-align:right;width:45px;height:32px;background:url(__STATIC__/index/images/title.png) -955px 0px no-repeat;">
+								<a href="{:url('News/index?id=8')}" style="display:inline;">
+									<img src="__STATIC__/index/images/more.png" style="border:0px;padding-top:15px;">
+								</a>
+							</div>
+						</div>
+						<div style="margin:0px;padding:0px">
+							&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 标题图片摘要(动态) -->
+			<div id='pdv_17106' class='pdv_class'  title='' style='width:345px;height:166px;top:60px;left:627px; z-index:12'>
+				<div id='spdv_17106' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+					<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+						<div style="height:25px;margin:1px;display:none;background:;">
+							<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+							</div>
+							<div style="float:right;margin-right:10px;display:inline">
+								<a href="news/class/" style="line-height:25px;color:">
+									更多
+								</a>
+							</div>
+						</div>
+						<div style="padding:0px">
+							<link href="__STATIC__/index/css/newslist26.css" rel="stylesheet" type="text/css" />
+							<script language="javascript" src="__STATIC__/index/js/newslist26.js"></script>
+							<ul class="newslist26">
+								{volist name="newList" id="vo"}
+								<li >
+									<img src="__STATIC__/index/picture/News/{$vo.image}" width="90px" height="60px">
+									<div class="time">{$vo.update_time|date='Y-m-d',time(###)}</div>
+									<a href="{:url('News/index?id='.$vo.id)}" target="_self">{$vo.title}</a>
+									<div class="memo">{$vo.keywords}</div>
+								</li>
+								{/volist}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 空白边框 -->
+			<div id='pdv_17105' class='pdv_class'  title='产品推荐' style='width:949px;height:37px;top:236px;left:25px; z-index:9'>
+				<div id='spdv_17105' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+					<div class="pdv_border" style="border:0px;height:100%;padding:0;margin:0;background:url(__STATIC__/index/images/title.png) 0 0 no-repeat">
+						<div style="height:32px;border:0px;padding:0;margin:0;">
+	    					<div style="float:left;width:99px;color:#505050;font:14px/32px 'microsoft yahei',simsun;text-align:center;">
+	    						产品推荐
+	    					</div>
+							<div style="float:right;text-align:right;width:45px;height:32px;background:url(__STATIC__/index/images/title.png) -955px 0px no-repeat;">
+								<a href="product/class" style="display:inline;">
+									<img src="__STATIC__/index/images/more.png" style="border:0px;padding-top:15px;">
+								</a>
+							</div>
+						</div>
+						<div style="margin:0px;padding:0px">
+						&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 产品列表滑动门10 -->
+			<div id='pdv_17101' class='pdv_class'  title='最新产品' style='width:950px;height:151px;top:285px;left:27px; z-index:5'>
+				<div id='spdv_17101' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+					<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+						<div style="height:25px;margin:1px;display:none;background:;">
+							<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+								最新产品
+							</div>
+							<div style="float:right;margin-right:10px;display:inline">
+								<a href="product/class/" style="line-height:25px;color:">更多</a>
+							</div>
+						</div>
+						<div style="padding:0px">
+							<link href="__STATIC__/index/css/productroll10.css" type="text/css" rel="stylesheet">
+							<script src="__STATIC__/index/js/productroll10.js" type="text/javascript"></script>
+							<div  class="productlistx">
+								<div class="blkproductlistx">
+									<div class="LeftButton" id="LeftArr1"></div>
+									<div class="Cont" id="ISL_Cont_11" style="overflow:hidden;">
+										{volist name="pictureShow" id="vo"}
+										<div class="box">
+											<div class="fang">
+												<a href="product/html/?95.html" target="_self">
+													<img src="__STATIC__/index/picture/Index/{$vo.image}" width="150px" height="110px" >
+												</a>
+											</div>
+											<a href="" target="_self" class="prodtitle">{$vo.title}</a>
+										</div>
+										{/volist}
+									</div>
+									<div class="RightButton" id="RightArr1"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{include file='public/bottom' /}
+	</div>
+	{include file='public/extend' /}
+	<script language="javascript" type="text/javascript">
+	var scrollPic_03 = new ScrollPic();
+		scrollPic_03.scrollContId   = "ISL_Cont_11"; //内容容器ID
+		scrollPic_03.arrLeftId      = "LeftArr1";//左箭头ID
+		scrollPic_03.arrRightId     = "RightArr1"; //右箭头ID
+
+		scrollPic_03.frameWidth     = 950;//显示框宽度
+		scrollPic_03.pageWidth      = 159; //翻页宽度
+
+		scrollPic_03.speed          = 10; //移动速度(单位毫秒，越小越快)
+		scrollPic_03.space          = 10; //每次移动像素(单位px，越大越快)
+		scrollPic_03.autoPlay       = true; //自动播放
+		scrollPic_03.autoPlayTime   = 3; //自动播放间隔时间(秒)
+
+		scrollPic_03.initialize(); //初始化					
+	</script>
+</body>
+</html>

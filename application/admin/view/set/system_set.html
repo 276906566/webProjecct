@@ -1,0 +1,249 @@
+{include file='public/title' /}
+<body>
+{include file='public/header' /}
+{include file='public/menu' /}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i><a href="{:url('Index/index')}" class="maincolor">首页</a><span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 基本设置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <form action="" method="post" class="form form-horizontal" id="form_system_set">
+                <div id="tab-system" class="HuiTab">
+                    <div class="tabBar cl"><span>基本设置</span><span>邮件设置</span><span>安全设置</span></div>
+                    <div class="tabCon">
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>网站名称：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="website_title" name="website_title" placeholder="控制在25个字、50个字节以内" value="{$info.WEBSITE_TITLE}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>关键词：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="website_Keywords" name="website_Keywords" placeholder="5个左右,8汉字以内,用英文,隔开" value="{$info.WEBSITE_KEYWORDS}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>描述：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="website_description" name="website_description" placeholder="空制在80个汉字，160个字符以内" value="{$info.WEBSITE_DESCRIPTION}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>css路径：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="css_path" name="css_path" placeholder="默认为空，为相对路径" value="{$info.CSS_PATH}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>js路径：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="js_path" name="js_path" placeholder="默认为空，为相对路径" value="{$info.JS_PATH}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片路径：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="img_path" name="img_path" placeholder="默认为空，为相对路径" value="{$info.IMG_PATH}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文件目录：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="upload_path" name="upload_path" placeholder="默认为uploadfile" value="{$info.UPLOAD_PATH}" class="input-text">
+                            </div>
+                        </div>
+                         <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>附件路径：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="upload_url" name="upload_url" placeholder="默认为空，为相对路径" value="{$info.UPLOAD_URL}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>底部版权：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="website_copyright" name="website_copyright" placeholder="&copy; 2014 H-ui.net" value="{$info.WEBSITE_CORYRIGHT}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">备案号：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="website_icp" name="website_icp" placeholder="京ICP备00000000号" value="{$info.WEBSITE_ICP}" class="input-text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tabCon">
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">邮件发送模式：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                {if condition="$info.MAIL_TYPE eq '0'"}
+                                <div class="radio-box">
+                                    <input type="radio" id="mail_type1" name="mail_type"  value="0" checked>
+                                    <label>SMTP 函数发送</label>
+                                </div>
+                                <div class="radio-box">
+                                    <input type="radio" id="mail_type2" name="mail_type" value="1">
+                                    <label>mail 模块发送</label>
+                                </div>
+                                {else /}
+                                <div class="radio-box">
+                                    <input type="radio" id="mail_type1" name="mail_type"  value="0" >
+                                    <label>SMTP 函数发送</label>
+                                </div>
+                                <div class="radio-box">
+                                    <input type="radio" id="mail_type2" name="mail_type" value="1" checked>
+                                    <label>mail 模块发送</label>
+                                </div>
+                                {/if}
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">邮件服务器：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="mail_server" name="mail_server" value="{$info.MAIL_SERVER}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">SMTP 端口：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="mail_port" name="mail_port" value="{$info.MAIL_PORT}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">邮箱帐号：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="mail_from" name="mail_from" value="{$info.MAIL_FROM}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">邮箱密码：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="password" id="mail_password" name="mail_password" value="{$info.MAIL_PASSWORD}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">收件邮箱地址：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="mail_user"  name="mail_user" value="{$info.MAIL_USER}" class="input-text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tabCon">
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">失败次数限定：</label>
+                            <div class="formControls col-xs-8 col-sm-9">
+                                <input type="text" id="maxloginfailedtimes" name="maxloginfailedtimes" value="{$info.MAXLOGINFAILTIMES}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="row cl">
+                            <label class="form-label col-xs-4 col-sm-2">关闭网站：</label>
+                            <div class="formControls skin-minimal col-xs-8 col-sm-9">
+                                {if condition="$info.WEB_CLOSE eq '0'"}
+                                <div class="radio-box">
+                                    <input type="radio" id="web_close1" name="web_close"  value="0" checked>
+                                    <label>开启网站</label>
+                                </div>
+                                <div class="radio-box">
+                                    <input type="radio" id="web_close2" name="web_close" value="1">
+                                    <label>关闭网站</label>
+                                </div>
+                                {else /}
+                                <div class="radio-box">
+                                    <input type="radio" id="web_close1" name="web_close"  value="0" >
+                                    <label>开启网站</label>
+                                </div>
+                                <div class="radio-box">
+                                    <input type="radio" id="web_close2" name="web_close" value="1" checked>
+                                    <label>关闭网站</label>
+                                </div>
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                        <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+                        <button onClick="layer_close();" class="btn btn-default radius" type="button"><i class="Hui-iconfont">&#xe66b;</i>取消&nbsp;&nbsp;</button>
+                    </div>
+                </div>
+            </form>
+        </article>
+    </div>
+</section>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    var CurIndex=0;
+    jQuery.Huitab =function(tabBar,tabCon,class_name,tabEvent,i)
+    {
+      var $tab_menu=$(tabBar);
+      // 初始化操作
+      $tab_menu.removeClass(class_name);
+      $(tabBar).eq(i).addClass(class_name);
+      $(tabCon).hide();
+      $(tabCon).eq(i).show();
+      
+      $tab_menu.bind(tabEvent,function()
+      {
+        $tab_menu.removeClass(class_name);
+          $(this).addClass(class_name);
+          var index=$tab_menu.index(this);
+          $(tabCon).hide();
+          $(tabCon).eq(index).show();
+          CurIndex=index;
+      })
+    };
+
+$(function()
+{
+    $('.skin-minimal input').iCheck({
+        checkboxClass: 'icheckbox-blue',
+        radioClass: 'iradio-blue',
+        increaseArea: '20%'
+    });
+    // #tab-system 父级id
+    // #tab-system .tabBar span 控制条
+    // #tab-system .tabCon 内容区
+    // click 事件 点击切换，可以换成mousemove 移动鼠标切换
+    // 0    默认第1个tab为当前状态（从0开始）
+    $.Huitab("#tab-system .tabBar span","#tab-system .tabCon","current","click","0");
+});
+
+    function article_save_submit()
+    { 
+        event.preventDefault();
+        var myform=$('#form_system_set');                               //获取form对象    
+        var tmpInput=$("<input type='text' name='pageIndex' hidden/>"); //添加隐藏表单子项
+        tmpInput.attr("value", CurIndex);                               //为表单子项赋值
+        myform.append(tmpInput);                                        //添加表单子项到表单
+        var form  =document.getElementById('form_system_set'); 
+        formdata =  new FormData(form);
+        $.ajax({
+            type:"POST",
+            url:"{:url('Set/save')}",
+            data:formdata,
+            dataType:"json",
+            processData:false,
+            contentType:false,
+            success:function(data)
+            {
+              if(data.code == 200)
+              {
+                layer.msg(data.msg, {icon: 6, time: 1000}); //消息弹层1秒后消失
+                var timer1=window.setInterval(function()
+                 {
+                    window.clearInterval(timer1);
+                 },1010);                   
+              }
+              else
+              {    
+                layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+              }
+            }
+        });
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

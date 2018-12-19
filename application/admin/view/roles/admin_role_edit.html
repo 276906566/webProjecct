@@ -1,0 +1,169 @@
+﻿{include file='public/title' /}
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-admin-role-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$id}" placeholder="" id="roleId" name="roleId" datatype="*4-16" hidden="true" ">
+				<input type="text" class="input-text" value="{$user}" placeholder="" id="roleName" name="roleName" datatype="*4-16" nullmsg="用户账户不能为空" style="width: 400px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">网站角色：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<dl class="permission-list" style="width: 400px;">
+					{volist name='list' id='vo'}
+					{if condition="$vo['father']['checked'] eq 1"}
+					<dt>
+						<label><input type="checkbox" value="{$vo['father']['id']}" name="user_Character_father" id="user_Character_father" checked="true">{$vo['father']['name']}</label>
+					</dt>
+					{else /}
+					<dt>
+						<label><input type="checkbox" value="{$vo['father']['id']}" name="user_Character_father" id="user_Character_father">{$vo['father']['name']}</label>
+					</dt>
+					{/if}
+					<dd>
+						{volist name='vo.son' id='svo'}
+						{if condition="count($svo) gt '0'"}
+						<dl class="cl permission-list2">
+							{eq name="$svo['checked']" value="1"}					
+							<dt>
+								<label class="">
+									<input type="checkbox" value="{$svo['id']}" name="user_Character_son" id="user_Character_son" checked="true">
+									{$svo['name']}
+								</label>
+							</dt>
+							{else /}
+							<dt>
+								<label class="">
+									<input type="checkbox" value="{$svo['id']}" name="user_Character_son" id="user_Character_son">
+									{$svo['name']}
+								</label>
+							</dt>
+							{/eq}
+							<dd>
+								{volist name='svo.allow' id='ssvo'}
+								{if condition="count($ssvo) gt '0'"}
+								{if condition="$ssvo['checked'] eq '1'"}
+								<label class="">
+									<input type="checkbox" value="{$ssvo.id}" name="user_Character_allow" id="user_Character_allow" checked="true">
+									{$ssvo.name}&nbsp;
+								</label>
+								{else /}
+								<label class="">
+									<input type="checkbox" value="{$ssvo.id}" name="user_Character_allow" id="user_Character_allow">
+									{$ssvo.name}&nbsp;
+								</label>
+								{/if}
+								{/if}
+								{/volist}
+							</dd>
+						</dl>
+						{/if}
+						{/volist}
+					</dd>
+					{/volist}
+				</dl>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<button type="button" class="btn btn-success radius" id="admin_role_save" name="admin_role_save"><i class="icon-ok"></i> 确定</button>
+			</div>
+		</div>
+	</form>
+</article>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+
+<script type="text/javascript">
+$(function()
+{	
+	//防止用户无数据提交;每次修改触发此函数
+	$("#form-admin-role-add").change(function()
+	{
+		$("#admin_role_save").removeClass('disabled');
+	});
+
+	$("#admin_role_save").click(function()
+	{
+		var baseData;
+		var father_list = "";
+		var son_list    = "";
+		var allow_list  = "";
+		$("#admin_role_save").attr("disabled",true);
+ 		
+ 		baseData = $("#roleName").val();
+ 		baseId   = $("#roleId").val();
+
+ 		$("input:checkbox[name='user_Character_father']:checked").each(function(i)
+ 		{
+            if(0==i)
+            {
+                father_list = $(this).val();
+            }
+            else
+            {
+                father_list += (","+$(this).val());
+            }
+        });
+
+        $("input:checkbox[name='user_Character_son']:checked").each(function(i)
+ 		{
+            if(0==i)
+            {
+                son_list = $(this).val();
+            }
+            else
+            {
+                son_list += (","+$(this).val());
+            }
+        });
+
+         $("input:checkbox[name='user_Character_allow']:checked").each(function(i)
+ 		{
+            if(0==i)
+            {
+                allow_list = $(this).val();
+            }
+            else
+            {
+                allow_list += (","+$(this).val());
+            }
+        });
+
+		$.ajax({
+			type:"POST",
+			url:"{:url('Roles/update')}",
+			data:{'roleId':baseId,'roleName':baseData,'father_checkboxs':father_list, 'son_checkboxs':son_list, 'allow_checkboxs':allow_list},
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

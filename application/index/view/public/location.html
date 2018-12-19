@@ -1,0 +1,18 @@
+<!-- 当前位置提示条 -->
+<div id='pdv_16238' class='pdv_class'  title='' style='width:750px;height:39px;top:18px;left:230px; z-index:5'>
+	<div id='spdv_16238' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+		<div class="pdv_border" style="border:0px;background:url(__STATIC__/index/images/title.png) 0 0 no-repeat;padding:0px;margin:0px;height:100%;">
+			<link href="__STATIC__/index/css/nav.css" rel="stylesheet" type="text/css" />
+			<div id="nav">
+				您现在的位置：<a href="{:url('Index/index')}">成都华瑞达建筑工程咨询有限公司</a> 
+				{if condition="isset($LocationMenuList[2])"}
+					-&gt; {$LocationMenuList[0]}-&gt; {$LocationMenuList[1]}-&gt; {$LocationMenuList[2]}
+				{elseif condition="isset($LocationMenuList[1])" /}
+					-&gt; {$LocationMenuList[0]}-&gt; {$LocationMenuList[1]}
+				{elseif  condition="isset($LocationMenuList[0])" /}
+					-&gt; {$LocationMenuList[0]}
+				{/if}
+			</div>
+		</div>
+	</div>
+</div>

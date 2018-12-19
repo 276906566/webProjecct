@@ -1,0 +1,56 @@
+<!-- 网页标题(菜单) -->
+<div id='pdv_16237' class='pdv_class'  title='栏目导航' style='width:200px;height:446px;top:15px;left:15px; z-index:4'>
+	<div id='spdv_16237' class='pdv_content' style='overflow:hidden;width:100%;height:100%'>
+		<div class="pdv_border" style="border:0px;height:100%;background:#ffffff url(__STATIC__/index/images/l.png) repeat-y">
+			<div style="height:100%;background:url(__STATIC__/index/images/r.png) right repeat-y">
+				<div style="height:55px;background:url(__STATIC__/index/images/top.png) 0px 0px no-repeat">
+					<div style="float:left;font:12px/56px 'SimSun',Arial,Sans-Serif;padding-left:43px;color:#fff;">
+						栏目导航
+					</div>
+					<div style="float:right;width:60px;height:55px;text-align:right;background:url(__STATIC__/index/images/top.png) -840px 0px no-repeat">
+						<a href="-1" style="display:none"><img src="__STATIC__/index/images/more.png" style="border:0px;margin:26px 25px 0px 0px;" /></a>
+					</div>
+				</div>
+				<div style="margin:0px 3px;padding:0px">
+					<link href="__STATIC__/index/css/pagetitlemenu_dolphin.css" rel="stylesheet" type="text/css" />
+					<div class="titlemenu_dolphin" >
+						<dl>
+							{volist name="navLeftMenuList" id="vo"}
+							{if condition="$vo.father"}
+								<dt>
+								{if condition="$vo['father']['ishidden'] eq '显示'"}
+									{if condition="$vo['father']['status'] eq '解锁'"}
+										<a href="{:url($vo['father']['controller'].'/'.$vo['father']['method'].'?id='.$vo['father']['mid'])}" target="_self" class="titlemenu_dolphin">{$vo['father']['title']}</a>
+									{else /}
+										<a href="javascript:void(0);" src="" >{$vo['father']['title']}</a>
+									{/if}
+								{/if}
+								</dt>
+								{if condition="isset($vo.son)"}
+									<dd>
+									{volist name="$vo.son" id="svo"}
+										{if condition="$svo.ishidden eq '显示'"}
+											{if condition="$svo.status eq '解锁'"}
+												<a href="{:url($svo['controller'].'/'.$svo['method'].'?id='.$svo['mid'])}" target="_self" class="titlemenu_dolphin">{$svo.title}</a>
+											{else /}
+												<a href="javascript:void(0);" src="" >{$svo.title}</a>
+											{/if}
+										{/if}
+									{/volist}
+									</dd>
+								{/if}
+							{/if}
+							{/volist}
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="margin-top:-12px;height:12px;line-height:12px;background:url(__STATIC__/index/images/top.png) 0px -218px no-repeat">
+			&nbsp;
+		</div>
+		<div style="float:right;margin-top:-12px;width:12px;height:12px;line-height:12px;background:url(__STATIC__/index/images/top.png) -888px -218px no-repeat">
+			&nbsp;
+		</div>
+	</div>
+</div>

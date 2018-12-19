@@ -1,0 +1,182 @@
+﻿{include file='public/header' /}
+<body style='background:#eeeeee url(__STATIC__/index/images/bg.jpg) repeat scroll 0% 0%'>
+	<div id='contain' style='width:1002px;margin:0px auto;padding:0px'>
+	{include file='public/top' /}
+		<div id='content' style='width:1002px;height:510px;background:url(__STATIC__/index/images/cbg.png) repeat-y;margin:0px auto'>
+		{include file='public/navLeft' /}
+		{include file='public/location' /}
+		<!-- 全站留言表单 -->
+		<div id='pdv_16827' class='pdv_class'  title='' style='width:713px;height:438px;top:70px;left:242px; z-index:6'>
+			<div id='spdv_16827' class='pdv_content' style='overflow:visible;width:100%;'>
+				<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+					<div style="height:25px;margin:1px;display:none;background:;">
+						<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+						</div>
+						<div style="float:right;margin-right:10px;display:none">
+							<a href="-1" style="line-height:25px;color:">更多</a>
+						</div>
+					</div>
+					<div style="padding:0px">
+						<link href="__STATIC__/index/css/feedbackform.css" rel="stylesheet" type="text/css" />
+						<script language="javascript" src="__STATIC__/index/js/feedback.js"></script>
+						<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
+						<script type="text/javascript" src="__STATIC__/admin/lib/layer/2.4/layer.js"></script>
+						<div  id="notice" class="noticediv"></div>
+						<form id="feedbacksmallform" method="post" action="" name="gform">
+							<table width="100%" border="0" cellspacing="0" cellpadding="3" >
+								<tr> 
+		      						<td width="80" align="right">留言主题：</td>
+			      					<td> 
+			        					<input type="text" name="title" id="title" class="input" style="width:399px" />
+			        					<font style='color:red'>*</font> 
+			        					<div style="padding-top:3px;color:#666"></div>  
+			        				</td>
+		    					</tr>
+							    <tr> 
+							      	<td width="80" align="right">留言内容：</td>
+							      	<td> 
+							        	<textarea name="content"  id="content" rows="10" class="textarea" style="width:399px" >
+							        	</textarea>
+							        	<font style='color:red'>*</font> 
+							        	<div style="padding-top:3px;color:#666">
+							        	</div>  
+							        </td>
+							    </tr>
+								<tr> 
+								    <td width="80" align="right">客户名称：</td>
+								    <td> 
+								        <input type="text" name="company" value="" class="input" style="width:399px" />
+								        <font style='color:red'>*</font> 
+								        <div style="padding-top:3px;color:#666"></div>  
+								    </td>   
+								</tr>
+								<tr> 
+							     	<td width="80" align="right">联 系 人：</td>
+							      	<td> 
+							        	<input type="text" name="name" id="name" class="input" style="width:399px" />
+							         	<div style="padding-top:3px;color:#666"></div>  
+							         </td>
+							    </tr>
+								<tr> 
+								    <td width="80" align="right">联系电话：</td>
+								    <td> 
+								        <input type="text" name="tel" id="tel" class="input" style="width:399px" />
+								        <font style='color:red'>*</font> 
+								        <div style="padding-top:3px;color:#666"></div>  
+								    </td>								    
+								</tr>
+								<tr> 
+								    <td width="80" align="right">QQ/MSN：</td>
+								    <td> 
+								        <input type="text" name="qq" value="" class="input" style="width:399px" />
+								        <div style="padding-top:3px;color:#666"></div>  
+								    </td>
+								</tr>
+								<tr> 
+								    <td width="80" align="right">邮箱地址：</td>
+								    <td> 
+								        <input type="text" name="email" value="" class="input" style="width:399px" />
+								        <font style='color:red'>*</font> 
+								        <div style="padding-top:3px;color:#666"></div>  
+								    </td>
+								</tr>
+							    <tr>
+							      	<td width="80" align="right">验 证 码：</td>
+							      	<td>
+							      		<div style="height:38px;white-space:nowrap;float:left;margin-right:1px">
+							      			<input class="input" type="text" name="ImgCode" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="" style="width:150px;" />
+										</div>
+										<div style="height:28px;white-space:nowrap;float:left">
+											<img src="{:captcha_src()}" id="captcha_img" alt="captcha" onclick="captcha_refresh()" />
+										</div>
+									</td>
+							    </tr>
+								<tr> 
+							      	<td width="80" align="right"></td>
+							      	<td></td>
+							    </tr>
+							    <tr> 
+							      	<td width="80" align="right">&nbsp;</td>
+							      	<td height="30">
+							        	<input type="button" name="Submit_btn" id="Submit_btn" value="提交" class="submit">
+								  	</td>
+		    					</tr>
+		  					</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		{include file='public/bottom' /}
+	</div>
+	{include file='public/extend' /}
+</body>
+<script>
+  $(function()
+  {
+    $("#Submit_btn").click(function()
+    {
+      if($("#name").val() == "") 
+      {
+        alert("请输入用户名");
+        return;
+      }
+      if($("#title").val() == "") 
+      {
+        alert("请输入主题");
+        return;
+      }
+      if($("textarea[name=content]").val() == "") 
+      {
+        alert("请输入内容");
+        return;
+      }
+      if($("#company").val() == "")
+      {
+          alert("请输入客户名称");
+          return;
+      }
+      if($("#tel").val() == "")
+      {
+          alert("请输入联系方式");
+          return;
+      }
+      if($("#email").val() == "")
+      {
+          alert("请输入邮箱地址");
+          return;
+      }
+      $.ajax({
+        type:"POST",
+        url:"{:url('Service/comment')}",
+        data:$('#feedbacksmallform').serialize(),
+        dataType:"json",
+        success:function(data)
+        {
+          if(data.code == 200)
+          {
+            layer.msg('谢谢您的反馈，我们会及时给您回复!',{icon:1,time:3000});
+			var timer1=window.setInterval(function()
+             {
+                window.clearInterval(timer1);
+                window.location.reload();               //重新加载页面,显示所有数据
+             },3010);     
+          }
+          else
+          {    
+            layer.msg('意见反馈不能提交，请联系管理员，谢谢！', {icon: 5, time: 1000}); //消息弹层1秒后消失
+          }
+        }
+      });
+    });
+  })
+</script>
+<script>
+  function captcha_refresh()
+  {
+    var str = Date.parse(new Date())/1000;
+    $('#captcha_img').attr("src","/captcha?id="+str);
+  }
+</script>
+</html>

@@ -1,0 +1,276 @@
+{include file='public/title' /}
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-admin-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$id}" placeholder="" id="adminId" name="adminId" hidden="true">
+					<input type="text" class="input-text" value="" placeholder="" id="adminName" name="adminName" style="width:463px;">
+					<span><input class="btn btn-primary radius" type="button" id="checkName"  value="点击验证"></span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" autocomplete="off" value="" placeholder="6位密码" id="adminPassword" name="adminPassword">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">账号状态：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<span class="select-box" style="width:150px;">
+						<select class="select" id="status_select" name="adminStatus" size="1">
+							<option value="0">禁用</option>
+							<option value="1">启用</option>
+							<option value="2">待审核</option>
+							<option value="3">删除</option>
+						</select>
+				</span> 
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="adminPhone" name="adminPhone" style="width:463px;">
+				<span><input class="btn btn-primary radius" type="button" name="checkPhone"  id="checkPhone" value="点击验证"></span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="@" name="adminEmail" id="adminEmail" value="" style="width:463px;">
+				<span><input class="btn btn-primary radius" type="button" name="checkEmail"  id="checkEmail" value="点击验证"></span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">角色：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+					<select class="select" name="adminRole" id="role_select" size="1">
+						{volist name="userList" id="vo"}
+						<option value="{vo.rid}">{$vo.title}</option>
+						{/volist}
+					</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius disabled" type="button" id="btn_submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+{include file='public/footer' /}
+
+<!--请在下方写此页面业务相关的脚本-->
+{include file='public/body_js' /}
+
+<script type="text/javascript">
+$(function()
+{	
+	var btn = document.getElementById("btn_submit");
+
+	// 验证中文名称 
+	function isChinaName(name) 
+	{ 
+		var pattern = /^[\u4E00-\u9FA5]{1,6}$/; 
+		return pattern.test(name); 
+	} 
+
+	// 验证手机号 
+	function isPhoneNo(phone) 
+	{ 
+		var pattern = /^1[34578]\d{9}$/; 
+		return pattern.test(phone); 
+	} 
+	// 验证身份证 
+	function isCardNo(card) 
+	{ 
+		var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+		return pattern.test(card); 
+	}
+	//验证邮箱
+	function isEmail(email)
+	{
+		var pattern = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+		return pattern.test(email);
+	}
+
+	//防止用户无数据提交;每次修改触发此函数
+	$("#form-admin-add").change(function()
+	{
+		$("#btn_submit").removeClass('disabled');
+	});
+
+	//当元素失去焦点时，检查用户名是否重复
+	$("#checkName").click(function()
+	{
+		var le=$("#adminName").val().trim().length;
+		if(le<3)
+		{
+			layer.msg("用户名至少为4位", {icon: 2, time: 1000}); //消息弹层1秒后消失
+			return;
+		}
+		else
+		{
+			$.ajax({
+				type:"GET",
+				url:"{:url('Users/checkUserName')}",
+				data:{name:$("#adminName").val()},
+				dataType:"json",
+				success:function(data)
+				{
+					if(data.code == 200)
+					    layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+					else
+						layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                    },1010);
+				}
+			});
+		}
+	});
+
+	//当元素失去焦点时，检查手机号是否重复
+	$("#checkPhone").click(function(){
+		var phone_length = $("#adminPhone").val().trim().length;
+		var temp_phone   = $("#adminPhone").val().trim();
+		if(phone_length == 0)
+		{
+			 layer.msg("手机号不能为空", {icon: 2, time: 1000}); //消息弹层1秒后消失
+			 return;
+		}
+		else
+		{
+			if((isPhoneNo(temp_phone) == false))
+			{
+				layer.msg("手机号不正确", {icon: 2, time: 1000}); //消息弹层1秒后消失
+			 	return;
+			}
+			else
+			{
+				$.ajax({
+					type:"GET",
+					url:"{:url('Users/checkPhone')}",
+					data:{phone:$("#adminPhone").val()},
+					dataType:"json",
+					success:function(data)
+					{
+						if(data.code == 200)
+						    layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+						else
+							layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+	                    var timer1=window.setInterval(function()
+	                    {
+	                        window.clearInterval(timer1);
+	                    },1010);
+					}
+				});
+			}
+		}
+	});
+
+	//当元素失去焦点时，检查手机号是否重复
+	$("#checkEmail").click(function(){
+        var temp_email   = $("#adminEmail").val().trim();
+        var email_length = $("#adminEmail").val().trim().length;
+        if(email_length == 0)
+        {
+        	layer.msg("邮箱不能为空", {icon: 2, time: 1000}); //消息弹层1秒后消失
+        	return;
+        }
+        else
+        {
+        	if(isEmail(temp_email)==false)
+        	{
+        		layer.msg("邮箱格式不正确", {icon: 2, time: 1000}); //消息弹层1秒后消失
+        		return;
+        	}
+        	else
+        	{
+        		$.ajax({
+					type:"GET",
+					url:"{:url('Users/checkEmail')}",
+					data:{email:$("#adminEmail").val()},
+					dataType:"json",	             
+					success:function(data)
+					{
+						if(data.code == 200)
+						    layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+						else
+							layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+						var timer1=window.setInterval(function()
+	                     {
+	                        window.clearInterval(timer1);
+	                     },1010);        
+					}
+				});
+        	}
+        }
+	});
+
+	$("#btn_submit").click(function(){
+		if($("#adminName").val() == "")
+		{
+			layer.msg('账号不能为空', {icon: 2, time: 1000}); //消息弹层1秒后消失
+			return;
+		}
+		if($("#adminPassword").val() == "")
+		{
+			layer.msg('密码不能为空', {icon: 2, time: 1000}); //消息弹层1秒后消失
+			return;
+		}
+		else
+		{
+			$("#adminPassword").val(hex_md5($("#adminPassword").val()));  //将密码进行MD5加密
+		}
+
+		if($("#adminPhone").val() == "")
+		{
+			layer.msg('手机不能为空', {icon: 2, time: 1000}); //消息弹层1秒后消失
+			return;
+		}
+
+		if($("#adminEmail").val() == "")
+		{
+			layer.msg('邮箱不能为空', {icon: 2, time: 1000}); //消息弹层1秒后消失
+			return;
+		}
+
+		$("#btn_submit").attr("disabled",true);
+		$.ajax({
+			type:"POST",
+			url:"{:url('Users/add')}",
+			data:$("#form-admin-add").serialize(),
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+//					window.location.href="javascript:location.replace(location.href);";
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

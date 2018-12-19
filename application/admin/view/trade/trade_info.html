@@ -1,0 +1,37 @@
+{include file='public/title' /}
+<body>
+<div class="pd-20">
+  <form action="" method="post" class="form form-horizontal" id="form_trade_info" target="testIframe">
+      <table class="table table-border table-bordered table-bg table-hover table-sort" id="data_table">
+        <thead>
+          <tr class="text-c">
+            <th width="40">序号</th>
+            <th width="80">网络地址</th>
+            <th width="60">原地址</th>
+            <th width="60">目标地址</th>
+            <th width="120">时间</th>
+            <th>数据</th>
+          </tr>
+        </thead>
+        <tbody>
+            {volist name="datas" id="vo"}
+            <tr class="text-c va-m">
+              <td class="text-c">{$vo.ukey}</td>
+              <td class="text-c">{$vo.sourceIp}</td>
+              <td class="text-c">{$vo.sourceId}</td>
+              <td class="text-c">{$vo.targetId}</td>
+              <td class="text-c">{$vo.time|date="Y-m-d H:i:s",###}</td>
+              <td class="text-l">{$vo.content}</td>
+            </tr>
+            {/volist}
+        </tbody>
+      </table> 
+  </form>
+</div>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript">
+</script>
+</body>
+</html>

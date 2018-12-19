@@ -1,0 +1,164 @@
+{include file='public/title' /}
+<body>
+<article class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form_link_add" enctype="multipart/form-data" method="post">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">所属分类：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="typeid" class="select" id="typeid">
+					<option value="0" selected="true">默认分类</option>
+				</select>
+				</span> 
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">链接类型：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box">
+					<input type="radio" id="linktype1" name="linktype"  value="0" onchange="change()" checked>
+					<label>logo链接</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="linktype2" name="linktype" value="1" onchange="change()">
+					<label>文字链接</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">网站名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="百度" id="name" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">网站地址：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="http://baidu.com" id="url" name="url">
+			</div>
+		</div>
+		<div class="row cl" id="logo1">
+			<label class="form-label col-xs-4 col-sm-2">logo地址：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="uploader-thum-container">
+					 <input type="file" name="image" id="image" />
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">联系人员：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="张三" id="username" name="username">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">联系方式：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="contact" name="contact">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">网站介绍：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="introduce" name="introduce">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">是否推荐：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box">
+					<input type="radio" id="elite1" name="elite"  value="1">
+					<label>是</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="elite2" name="elite" value="0" checked>
+					<label>否</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">审核通过：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box">
+					<input type="radio" id="pass1" name="pass"  value="1" checked>
+					<label>是</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="pass2" name="pass" value="0">
+					<label>否</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button id="btn_submit" class="btn btn-primary radius" type="submit">
+					<i class="Hui-iconfont">&#xe632;</i> 保存
+				</button>
+			</div>
+		</div>
+	</form>
+</article>
+{include file='public/footer' /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	function change()
+	{
+	    if($('input:radio:checked').val() == 0)
+	    {
+	        document.getElementById("logo1").style.visibility="visible";    //显示
+			document.getElementById("logo1").style.display="";              //显示
+	    }
+	    else
+	    {
+	    	document.getElementById("logo1").style.visibility="hidden";       //隐藏
+			document.getElementById("logo1").style.display="none";            //隐藏
+	    }
+	}
+</script>
+<script>
+	//防止用户无数据提交;每次修改触发此函数
+	$("#form_link_add").change(function()
+	{
+		$("#btn_submit").removeClass('disabled');
+	});
+
+	$("#btn_submit").click(function()
+	{
+		event.preventDefault();
+        var form  =document.getElementById('form_link_add'),
+        formdata =  new FormData(form);
+
+		$("#btn_submit").attr("disabled",true);
+		$.ajax({
+			type:"POST",
+			url:"{:url('Link/save')}",
+			data:formdata,
+			dataType:"json",
+			processData:false,
+            contentType:false,
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+</script> 
+</body>
+</html>

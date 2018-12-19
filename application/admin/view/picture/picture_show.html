@@ -1,0 +1,91 @@
+﻿{include file='public/title' /}
+<body>
+{include file='public/header' /}
+{include file='public/menu' /} 
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i><a href="{:url('Index/index')}" class="maincolor">首页</a>
+		<span class="c-gray en">&gt;</span>
+		图片管理
+		<span class="c-gray en">&gt;</span>
+		图片显示
+		<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+	</nav>
+	<form action="" method="post" class="form form-horizontal" id="form-picture">
+		<div class="pd-20">
+			<div class="cl pd-5 bg-1 bk-gray mt-20">
+				<span class="l">
+				<button type="button" class="btn btn-danger radius" id="picture_delete" name="picture_delete"><i class="icon-ok"></i> 删除</button>
+				</span>
+				<span class="r">共有数据：<strong>{$count}</strong> 条</span>
+			</div>
+			<div class="portfolio-content">
+				<ul class="cl portfolio-area">
+					{volist name="list" id="vo"}
+					<li class="item">
+						<div class="portfoliobox">
+							<input class="checkbox" name="check" type="checkbox" value="{$vo.id}">
+							<div class="picbox">
+								<a href="{$vo.path}/{$vo.name}" data-lightbox="gallery" data-title="{$vo.path}/{$vo.name}"><img src="{$vo.path}/{$vo.name}"></a>
+							</div>
+							<div class="textbox">{$vo.name}</div>
+						</div>
+					</li>
+					{/volist}
+				</ul>
+			</div>
+			{$page}
+		</div>
+    </form>
+</section>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+$("#picture_delete").click(function()
+{
+	var checked_list = "";
+	layer.confirm('确认要删除吗？',function(index)
+	{
+		$("input:checkbox[name='check']:checked").each(function(i)
+		{
+	        if(0==i)
+	        {
+	            checked_list = $(this).val();
+	        }
+	        else
+	        {
+	            checked_list += (","+$(this).val());
+	        }
+	    });
+        $.ajax({
+			type:"POST",
+			url:"{:url('picture/delete')}",
+			data:{'checked_lists':checked_list},
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});	
+});	
+</script>
+</body>
+</html>

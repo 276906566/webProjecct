@@ -1,0 +1,176 @@
+{include file='public/title' /}
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-category-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属分类：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width: 490px;"> 
+				<span class="select-box">
+					<select class="select" size="1" name="catePid" id="select_pid">
+						<option value="-1" selected>顶级分类</option>
+						{volist name='cate' id='vo'}
+							<option value="{$vo.mid}">{$vo.cate_title}</option>
+						{/volist}
+					</select>
+				</span> 
+			</div>
+		</div>
+		<div class="row cl" id="cateName_div">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="cateName" name="cateName" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>控制器名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="cateController" name="cateController" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl" id="cateMethod_div" style="visibility: hidden; display: none">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>方法名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="cateMethod" name="cateMethod" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">是否锁定：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box">
+					<input type="radio" id="cateStatus" name="cateStatus"  value="0" checked>
+					<label>解锁</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="cateStatus" name="cateStatus" value="1">
+					<label>锁定</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">是否显示：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box" >
+					<input type="radio" id="cateIshidden" name="cateIshidden" value="0" checked>
+					<label">显示</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="cateIshidden" name="cateIshidden" value="1" >
+					<label">隐藏</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">应用终端：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box" >
+					<input type="radio" id="terminal" name="pc" value="0" checked>
+					<label">手机</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="terminal" name="pc" value="1" >
+					<label">电脑</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3" >
+				<input class="btn btn-primary radius disabled" type="button" id="btn_submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本--> 
+<script>
+	$("#select_pid").blur(function()
+	{
+		var curLevel       = 0;
+		var baseData       = $("#select_pid").val();
+		var arr            = {$levels};
+		if(baseData == -1)
+		{
+			curLevel = 0;
+		}
+		else
+		{
+			for(var i = 0,n;n = arr[i]; i++)
+			{
+				if(baseData == n.mid)
+				{
+		    		curLevel = n.level;
+		    		break;
+				}
+		    }
+		}
+		
+	    switch(curLevel)	 
+	    {
+	    	case "一级菜单":                                                              //一级菜单被选中
+	    		document.getElementById("cateName_div").style.visibility="visible";      //显示
+				document.getElementById("cateName_div").style.display="";                //显示
+				document.getElementById("cateName").readOnly=false;
+				document.getElementById("cateMethod_div").style.visibility="visible";    //显示
+				document.getElementById("cateMethod_div").style.display="";              //显示
+				document.getElementById("cateMethod").readOnly=false;
+	    	break;
+	    	case "二级菜单":                                                              //二级菜单被选中
+				document.getElementById("cateName_div").style.visibility="hidden";       //隐藏
+				document.getElementById("cateName_div").style.display="none";            //隐藏
+				document.getElementById("cateController").readOnly=false;
+				document.getElementById("cateMethod_div").style.visibility="visible";    //显示
+				document.getElementById("cateMethod_div").style.display="";              //显示
+				document.getElementById("cateMethod").readOnly=false;
+	    	break;
+	    	default:                                                                    //顶级菜单被选中
+	    		document.getElementById("cateName_div").style.visibility="visible";     //显示
+				document.getElementById("cateName_div").style.display="";               //显示
+				document.getElementById("cateName").readOnly=false;
+				document.getElementById("cateMethod_div").style.visibility="hidden";    //隐藏
+				document.getElementById("cateMethod_div").style.display="none";         //隐藏
+				document.getElementById("cateMethod").readOnly=true;		
+	    }   
+	});
+</script>
+<script>
+	//防止用户无数据提交;每次修改触发此函数
+	$("#form-category-add").change(function()
+	{
+		$("#btn_submit").removeClass('disabled');
+	});
+
+	$("#btn_submit").click(function()
+	{
+		$("#btn_submit").attr("disabled",true);
+		$.ajax({
+			type:"POST",
+			url:"{:url('LabelCate/labelCateSave')}",
+			data:$("#form-category-add").serialize(),
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

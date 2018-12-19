@@ -1,0 +1,252 @@
+{include file='public/title' /}
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-category-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属分类：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width: 490px;"> 
+				<span class="select-box">
+					<select class="select" size="1" name="catePid" id="select_pid">
+						<option value="-1" selected>顶级分类</option>
+						{volist name='cate' id='vo'}
+							<option value="{$vo.mid}">{$vo.cate_title}</option>
+						{/volist}
+					</select>
+				</span> 
+			</div>
+		</div>
+		<div class="row cl" id="cateName_div">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="cateName" name="cateName" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl" id="catePic_div">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类图标：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="catePic" name="catePic" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl" id="cateAllow_div" style="visibility: hidden; display: none">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名称：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width: 490px;"> 
+				<span class="select-box">
+					<select class="select" size="1" name="cateAllow" id="cateAllow" disabled>
+						{volist name='allow' id='vo'}
+							<option value="{$vo.name}">{$vo.name}</option>
+						{/volist}
+					</select>
+				</span> 
+			</div>
+		</div>
+
+		<div class="row cl" id="cateController_div" style="visibility: hidden; display: none">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>控制器名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="cateController" name="cateController" style="width:463px;" readonly>
+			</div>
+		</div>
+		<div class="row cl" id="cateMethod_div" style="visibility: hidden; display: none">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>方法名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="cateMethod" name="cateMethod" style="width:463px;" readonly>
+			</div>
+		</div>
+		<div class="row cl" id="cateStatus_div">
+			<label class="form-label col-xs-4 col-sm-3">是否锁定：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box">
+					<input type="radio" id="cateStatus1" name="cateStatus"  value="0" checked>
+					<label>解锁</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="cateStatus2" name="cateStatus" value="1">
+					<label>锁定</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl" id="cateIshidden_div">
+			<label class="form-label col-xs-4 col-sm-3">是否显示：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				<div class="radio-box" >
+					<input type="radio" id="cateIshidden1" name="cateIshidden" value="0" checked>
+					<label">显示</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="cateIshidden2" name="cateIshidden" value="1" >
+					<label">隐藏</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-3" >
+				<input class="btn btn-primary radius disabled" type="button" id="btn_submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本--> 
+<script>
+	$("#select_pid").blur(function()
+	{
+		var curLevel       = 0;
+		var baseData       = $("#select_pid").val();
+		var arr            = {$levels};
+		
+		for(var i = 0,n;n = arr[i]; i++)
+		{
+			if(baseData == n.Mmid)
+			{
+	    		curLevel = n.Mlevel;
+	    		break;
+			}
+	    }
+	    switch(curLevel)	 
+	    {
+	    	case 1:                                                                    //一级菜单被选中
+	    		document.getElementById("cateName_div").style.visibility="visible";    //显示
+				document.getElementById("cateName_div").style.display="";              //显示
+				document.getElementById("cateName").readOnly=false;
+				document.getElementById("catePic_div").style.visibility="hidden";       //隐藏
+				document.getElementById("catePic_div").style.display="none";            //隐藏
+				document.getElementById("catePic").readOnly=true;
+				document.getElementById("cateAllow_div").style.visibility="hidden";      //隐藏
+				document.getElementById("cateAllow_div").style.display="none";           //隐藏
+				document.getElementById("cateAllow").disabled=true;
+				document.getElementById("cateController_div").style.visibility="visible";//显示
+				document.getElementById("cateController_div").style.display="";          //显示
+				document.getElementById("cateController").readOnly=false;
+				document.getElementById("cateMethod_div").style.visibility="visible";    //显示
+				document.getElementById("cateMethod_div").style.display="";              //显示
+				document.getElementById("cateMethod").readOnly=false;
+				document.getElementById("cateStatus_div").style.visibility="visible";    //显示
+				document.getElementById("cateStatus_div").style.display="";              //显示
+				document.getElementById("cateStatus1").disabled=false;
+				document.getElementById("cateStatus2").disabled=false;
+				document.getElementById("cateIshidden_div").style.visibility="visible";   //显示
+				document.getElementById("cateIshidden_div").style.display="";             //显示
+				document.getElementById("cateIshidden1").disabled=false;
+				document.getElementById("cateIshidden2").disabled=false;	
+	    	break;
+	    	case 2:                                                                      //二级菜单被选中
+	    		document.getElementById("cateName_div").style.visibility="hidden";       //隐藏
+				document.getElementById("cateName_div").style.display="none";            //隐藏
+				document.getElementById("cateName").readOnly=true;
+	    		document.getElementById("catePic_div").style.visibility="hidden";        //隐藏
+				document.getElementById("catePic_div").style.display="none";             //隐藏
+	    		document.getElementById("catePic").readOnly=true;
+				document.getElementById("cateAllow_div").style.visibility="visible";      //显示
+				document.getElementById("cateAllow_div").style.display="";                //显示
+				document.getElementById("cateAllow").disabled=false;
+				document.getElementById("cateController_div").style.visibility="visible";//显示
+				document.getElementById("cateController_div").style.display="";          //显示
+				document.getElementById("cateController").readOnly=false;
+				document.getElementById("cateMethod_div").style.visibility="visible";    //显示
+				document.getElementById("cateMethod_div").style.display="";              //显示
+				document.getElementById("cateMethod").readOnly=false;
+				document.getElementById("cateStatus_div").style.visibility="visible";    //显示
+				document.getElementById("cateStatus_div").style.display="";              //显示
+				document.getElementById("cateStatus1").disabled=false;
+				document.getElementById("cateStatus2").disabled=false;
+				document.getElementById("cateIshidden_div").style.visibility="visible";   //显示
+				document.getElementById("cateIshidden_div").style.display="";             //显示
+				document.getElementById("cateIshidden1").disabled=false;
+				document.getElementById("cateIshidden2").disabled=false;	
+	    	break;
+	    	case 3:
+	    		document.getElementById("cateName_div").style.visibility="hidden";       //隐藏
+				document.getElementById("cateName_div").style.display="none";            //隐藏
+				document.getElementById("cateName").readOnly=true;
+	    		document.getElementById("catePic_div").style.visibility="hidden";        //隐藏
+				document.getElementById("catePic_div").style.display="none";             //隐藏
+	    		document.getElementById("catePic").readOnly=true;
+				document.getElementById("cateAllow_div").style.visibility="hidden";      //隐藏
+				document.getElementById("cateAllow_div").style.display="none";           //隐藏
+				document.getElementById("cateAllow").disabled=true;
+				document.getElementById("cateController_div").style.visibility="hidden"; //隐藏
+				document.getElementById("cateController_div").style.display="none";      //隐藏
+				document.getElementById("cateController").readOnly=true;
+				document.getElementById("cateMethod_div").style.visibility="hidden";     //隐藏
+				document.getElementById("cateMethod_div").style.display="none";          //隐藏
+				document.getElementById("cateMethod").readOnly=true;
+				document.getElementById("cateStatus_div").style.visibility="hidden";     //隐藏
+				document.getElementById("cateStatus_div").style.display="none";          //隐藏
+				document.getElementById("cateStatus1").disabled=true;
+				document.getElementById("cateStatus2").disabled=true;
+				document.getElementById("cateIshidden_div").style.visibility="hidden";    //隐藏
+				document.getElementById("cateIshidden_div").style.display="none";         //隐藏
+				document.getElementById("cateIshidden1").disabled=true;
+				document.getElementById("cateIshidden2").disabled=true;
+				document.getElementById("btn_submit").disabled=true;
+	    	break;
+	    	default:                                                                   //顶级菜单被选中
+	    		document.getElementById("cateName_div").style.visibility="visible";     //显示
+				document.getElementById("cateName_div").style.display="";               //显示
+				document.getElementById("cateName").readOnly=false;
+				document.getElementById("catePic_div").style.visibility="visible";     //显示
+				document.getElementById("catePic_div").style.display="";               //显示
+	    		document.getElementById("catePic").readOnly=false;
+				document.getElementById("cateAllow_div").style.visibility="hidden";    //隐藏
+				document.getElementById("cateAllow_div").style.display="none";         //隐藏
+				document.getElementById("cateAllow").disabled=true;
+				document.getElementById("cateController_div").style.visibility="hidden";//隐藏
+				document.getElementById("cateController_div").style.display="none";     //隐藏
+				document.getElementById("cateController").readOnly=true;
+				document.getElementById("cateMethod_div").style.visibility="hidden";    //隐藏
+				document.getElementById("cateMethod_div").style.display="none";         //隐藏
+				document.getElementById("cateMethod").readOnly=true;
+				document.getElementById("cateStatus_div").style.visibility="visible";    //显示
+				document.getElementById("cateStatus_div").style.display="";              //显示
+				document.getElementById("cateStatus1").disabled=false;
+				document.getElementById("cateStatus2").disabled=false;
+				document.getElementById("cateIshidden_div").style.visibility="visible";   //显示
+				document.getElementById("cateIshidden_div").style.display="";             //显示
+				document.getElementById("cateIshidden1").disabled=false;
+				document.getElementById("cateIshidden2").disabled=false;				
+	    }   
+	});
+</script>
+<script>
+	//防止用户无数据提交;每次修改触发此函数
+	$("#form-category-add").change(function()
+	{
+		$("#btn_submit").removeClass('disabled');
+	});
+
+	$("#btn_submit").click(function()
+	{
+		$("#btn_submit").attr("disabled",true);
+		$.ajax({
+			type:"POST",
+			url:"{:url('System/add')}",
+			data:$("#form-category-add").serialize(),
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿{include file='public/title' /}
+<body>
+{include file='public/header' /}
+{include file='public/menu' /}
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 数据监控 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="pd-20">
+	  <div class="cl pd-5 bg-1 bk-gray mt-20"> 
+		<span class="l">
+			<a href="javascript:;" onclick="stop()" class="btn btn-danger radius" id="stop_btn"><i class="Hui-iconfont">&#xe6e2;</i> 请暂停监控</a>
+			<a href="javascript:;" onclick="start()" class="btn btn-primary radius" id="start_btn"><i class="Hui-iconfont">&#xe600;</i>正在监控</a>
+		</span> 
+	  </div>
+	  <form action="" method="post" class="form form-horizontal" id="form_trade_info" target="testIframe">
+	      <table class="table table-border table-bordered table-bg table-sort" id="data_table">
+	        <thead>
+	          <tr class="text-c">
+	            <th width="40">序号</th>
+	            <th width="80">网络地址</th>
+	            <th width="60">原地址</th>
+	            <th width="60">目标地址</th>
+	            <th width="120">时间</th>
+	            <th>数据</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	        </tbody>
+	      </table> 
+	  </form>
+	</div>
+</section>
+{include file='public/footer' /}
+<!--请在下方写此页面业务相关的脚本--> 
+{include file='public/body_js' /}
+<script type="text/javascript">
+	var time = window.setInterval("tijiao()",1000);
+	function tijiao()
+	{
+		$.ajax({
+		    type:"POST",
+		    url:"{:url('Trade/reload')}",
+		    data:{index:1},
+		    dataType:"json",
+		    success:function(tempdata)
+		    {
+		    	var data = tempdata.data;
+		    	$('.table-sort').DataTable(
+		    	{
+		    	   searching:false,
+		    	   destroy:true,
+			       data: data,
+				   order: [[ 0, "desc" ]],
+			       columns: [
+			           { data: 'ukey' },                             
+			           { data: 'sourceIp' },
+			           { data: 'sourceId' },
+					   { data: 'targetId' },                             
+			           { data: 'time' },
+			           { data: 'content' },
+			        ]
+			   });
+		    }
+		});
+	}
+
+	function stop()
+	{
+		x = document.getElementById("stop_btn");
+		x.innerHTML = "已停止";
+		y = document.getElementById("start_btn");
+		y.innerHTML = "请开始监控";
+		window.clearTimeout(time);  
+	}
+
+	function start()
+	{
+		x = document.getElementById("stop_btn");
+		x.innerHTML = "请停止监控";
+		y = document.getElementById("start_btn");
+		y.innerHTML = "正在监控";
+		time = window.setInterval("tijiao()",1000);
+	}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

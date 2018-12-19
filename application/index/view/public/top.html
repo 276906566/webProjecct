@@ -1,0 +1,128 @@
+<div id='top' style='width:1002px;height:515px;background:url(__STATIC__/index/images/topbg.png) no-repeat'>
+	<!-- 网站标志 -->
+	<div id='pdv_10806' class='pdv_class'  title='' style='width:387px;height:52px;top:70px;left:37px; z-index:1'>
+		<div id='spdv_10806' class='pdv_top' style='overflow:hidden;width:100%;height:100%'>
+			<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+				<div style="height:25px;margin:1px;display:none;background:;">
+					<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+					</div>
+					<div style="float:right;margin-right:10px;display:none">
+						<a href="-1" style="line-height:25px;color:">更多</a>
+					</div>
+				</div>
+				<div style="padding:0px">
+					<a href="#"><img src="__STATIC__/index/picture/Website/logoAndCompany.png" border="0" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 全站轮播广告 -->
+	<div id='pdv_17164' class='pdv_class'  title='' style='width:990px;height:320px;top:193px;left:6px; z-index:8'>
+		<div id='spdv_17164' class='pdv_top' style='overflow:hidden;width:100%;height:100%'>
+			<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+				<div style="height:25px;margin:1px;display:none;background:;">
+					<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+					</div>
+					<div style="float:right;margin-right:10px;display:none">
+						<a href="-1" style="line-height:25px;color:">更多</a>
+					</div>
+				</div>
+				<div style="padding:0px">
+					<link href="__STATIC__/index/css/advsgloballb2.css" rel="stylesheet" type="text/css" />
+					<script type=text/javascript src="__STATIC__/index/js/advsgloballb2.js"></script>
+					<div id="advsLbDiv">
+						<a href="#"><img src="__STATIC__/index/picture/common/advsgloballb2.png" /></a>
+					</div>
+					<div class="advsLbList" style="background:url(__STATIC__/index/picture/common/1365407823.jpg) center top no-repeat">
+						<a href="http://www.ymjd.com"></a>
+					</div>
+					<div class="advsLbList" style="background:url(__STATIC__/index/picture/common/1365407831.jpg) center top no-repeat">
+						<a href="http://www.ymjd.com"></a>
+					</div>
+					<div class="advsLbList" style="background:url(__STATIC__/index/picture/common/1365407843.jpg) center top no-repeat">
+						<a href="http://www.ymjd.com"></a>
+					</div>
+                </div>
+			</div>
+		</div>
+	</div>
+	<!-- 全站搜索表单 -->
+	<div id='pdv_17110' class='pdv_class'  title='' style='width:327px;height:32px;top:71px;left:635px; z-index:10'>
+		<div id='spdv_17110' class='pdv_top' style='overflow:hidden;width:100%;height:100%'>
+			<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+				<div style="height:25px;margin:1px;display:none;background:;">
+					<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+					</div>
+					<div style="float:right;margin-right:10px;display:none">
+						<a href="-1" style="line-height:25px;color:">更多</a>
+					</div>
+				</div>
+				<div style="padding:0px">
+					<link href="__STATIC__/index/css/searchform_simple.css" rel="stylesheet" type="text/css" />
+					<script language="javascript" src="__STATIC__/index/js/searchform.js"></script>
+					<div class="globalsearchformzone">
+						<form id="globalsearchform" method="get" action="search/index.php">
+								<div class="globalsearchform">
+								<input name="key" type="text" id="globalsearchform_key" value="" class="input" />
+								</div>
+							<div class="globalsearchform1">
+									<input name="imageField" id="button" type="image" src="__STATIC__/index/images/search.png" class="imgbutton" />
+								</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 二级下拉菜单16 -->
+	<div id='pdv_17047' class='pdv_class'   style='width:990px;height:50px;top:142px;left:6px; z-index:11'>
+		<div id='spdv_17047' class='pdv_top' style='overflow:hidden;width:100%;height:100%'>
+			<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+				<div style="height:25px;margin:1px;display:none;background:;">
+					<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+						导航菜单
+					</div>
+					<div style="float:right;margin-right:10px;display:none">
+						<a href="-1" style="line-height:25px;color:">更多</a>
+					</div>
+				</div>
+				<div style="padding:0px">
+					<link href="__STATIC__/index/css/dropmenu16.css" rel="stylesheet" type="text/css" />
+					<script type="text/javascript" src="__STATIC__/index/js/dropmenu16.js"></script>
+					<ul id="dropmenu">
+						{volist name="navTopList" id="vo"}
+						{if condition="$vo['father']['hidden'] eq '显示'"}
+						<li>
+							{if condition="$vo['father']['status'] eq '解锁'"}
+								<a href="{:url($vo['father']['controller'].'/index?id='.$vo['father']['id'])}">{$vo['father']['name']}
+								</a>
+								{if condition="$vo.son"}
+									<ul>
+										{volist name="vo['son']" id="svo"}
+										{if condition="$svo['hidden'] eq '显示'"}
+										<li>
+											{if condition="$svo['status'] eq '解锁'"}
+						                	<a href="{:url($svo['controller'].'/'.$svo['method'].'?id='.$svo['id'])}">{$svo.name}</a>
+						                	{else /}
+						                	<a href="javascript:void(0);" src="" >{$svo.name}</a>
+						                	{/if}
+										</li>
+										{/if}
+										{/volist}
+									</ul>
+
+								{/if}
+							{else /}
+								<a href="javascript:void(0);">{$vo['father']['name']}</a>
+							{/if}
+						</li>
+						{/if}
+						{/volist}
+					</ul>
+					<div class="clear"> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

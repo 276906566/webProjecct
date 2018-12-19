@@ -1,0 +1,77 @@
+{include file='public/title' /}
+<body>
+<article class="page-container">
+	<form action="" method="post" class="form form-horizontal" id="form_permission_add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>权限名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="name" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>权限等级：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="number" name="number">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button id="btn_submit" class="btn btn-primary radius" type="submit">
+					<i class="Hui-iconfont">&#xe632;</i> 保存
+				</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+//防止用户无数据提交;每次修改触发此函数
+	$("#form_permission_add").change(function()
+	{
+		$("#btn_submit").removeClass('disabled');
+	});
+
+	$("#btn_submit").click(function()
+	{
+		 if($("#name").val() == "" || $("#number").val() == "") 
+	      {
+	        alert("请补齐信息");
+	        return;
+	      }
+		$("#btn_submit").attr("disabled",true);
+		$.ajax({
+			type:"POST",
+			url:"{:url('Permission/save')}",
+			data:$("#form_permission_add").serialize(),
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,15 @@
+﻿{include file='public/title' /}
+<body>
+<div class="content" style="text-align: center; margin:0 auto;">
+	<div class="text-c">{$data.title}</div>  
+	<div class="text-c" style="font-size: 8px;">{$data.author}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$data.update_time}</div> 
+	<div id='ContentPage1' style="margin:0 auto; width: 960px; text-align:center;">
+		<p style="text-indent: 32px; line-height: 3em;">
+			{$data.content}
+		</p>
+	</div>
+</div>
+
+{include file='public/footer' /}
+</body>
+</html>

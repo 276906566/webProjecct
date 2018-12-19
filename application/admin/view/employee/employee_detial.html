@@ -1,0 +1,170 @@
+{include file='public/title' /}
+<body>
+<div style="text-align:center" >
+    <table class="table table-border table-bordered" style="width: 40%;margin:auto">
+      <tr> 
+        <td width="80" align="right">姓　　名：</td>
+        <td> 
+          <input type="text" name="name" id="name" value="{$data.name}" class="input" style="width:399px" readonly="true" />
+          <div style="padding-top:3px;color:#666"></div>
+        </td>
+      </tr>
+      <tr> 
+        <td width="80" align="right">性　　别：</td>
+        <td> 
+          <select name="sex" id="sex" style="width:405px" disabled>
+  		      <option value=0 >男</option>
+            <option value=1 >女</option>
+          </select>
+          <div style="padding-top:3px;color:#666"></div> 
+        </td>
+      </tr>
+      <tr> 
+        <td width="80" align="right">出生日期：</td>
+          <td> 
+            <input type="text"  id="born" name="born" value="{$data.born}" style="width:399px;" readonly="true">
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">婚姻状况：</td>
+          <td> 
+            <select name="marry" id=marry style="width:405px" disabled>
+    		      <option value=0 >未婚</option>
+              <option value=1 >已婚</option>
+            </select>
+            <div style="padding-top:3px;color:#666"></div> 
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">毕业院校：</td>
+          <td> 
+            <input type="text" name="school" id="school" value="{$data.school}" class="input" style="width:399px" readonly="true"/>
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">最高学历：</td>
+          <td> 
+            <select name="degree" id=degree style="width:405px" disabled>
+              <option value=0 >高中</option>
+              <option value=1 >中专</option>
+              <option value=2 >大专</option>
+              <option value=3 >本科</option>
+              <option value=4 >研究生</option>
+              <option value=5 >博士</option>
+            </select>
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">毕业专业：</td>
+          <td> 
+            <input type="text" name="major" id="major" value="{$data.major}" class="input" style="width:399px" readonly="true"/>
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">毕业时间：</td>
+          <td> 
+             <input type="text"  id="endtime" name="endtime" value="{$data.endtime}" style="width:399px; readonly="true"/">
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">QQ号码：</td>
+          <td> 
+            <input type="text" name="qq" id="qq" value="{$data.qq}" class="input" style="width:399px" readonly="true" />
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">手机号码：</td>
+          <td> 
+            <input type="text" name="tel" id="tel" value="{$data.tel}" class="input" style="width:399px" />
+             <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">通信地址：</td>
+          <td> 
+            <input type="text" name="address" id="address" value="{$data.address}" class="input" style="width:399px" readonly="true" />
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">电子邮箱：</td>
+          <td> 
+            <input type="text" name="email" id="email" value="{$data.email}" class="input" style="width:399px" readonly="true" />
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">专业特长：</td>
+          <td> 
+            <input type="text" name="speciality" id="speciality" value="{$data.speciality}" class="input" style="width:399px" readonly="true" />
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+        <tr> 
+          <td width="80" align="right">工作经历：</td>
+          <td> 
+            <textarea name="work" id="work"  rows="10" class="textarea" style="width:399px" readonly="true">{$data.work}</textarea>
+            <div style="padding-top:3px;color:#666"></div>  
+          </td>
+        </tr>
+    </table>
+</div>
+{include file='public/footer' /}
+<script>
+  var select = document.getElementById('degree');
+  switch("{$data.degree}")
+  {
+    case "高中":
+      select.options[0].selected=true;
+      break;
+    case "中专":
+      select.options[1].selected=true;
+      break;
+    case "大专":
+      select.options[2].selected=true;
+      break;
+    case "本科":
+      select.options[3].selected=true;
+      break;
+    case "研究生":
+      select.options[4].selected=true;
+      break;
+    case "博士研究生":
+      select.options[5].selected=true;
+      break;
+  }
+</script>
+
+<script>
+  var select = document.getElementById('marry');
+  switch("{$data.marry}")
+  {
+    case "0":
+      select.options[0].selected=true;
+      break;
+    case "1":
+      select.options[1].selected=true;
+      break;
+  }
+</script>
+
+<script>
+  var select = document.getElementById('sex');
+  switch("{$data.sex}")
+  {
+    case "0":
+      select.options[0].selected=true;
+      break;
+    case "1":
+      select.options[1].selected=true;
+      break;
+  }
+</script>
+</body>
+</html>

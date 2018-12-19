@@ -1,0 +1,179 @@
+﻿{include file='public/title' /}
+<body>
+{include file='public/header' /}
+{include file='public/menu' /}
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i><a href="{:url('Index/index')}" class="maincolor">首页</a><span class="c-gray en">&gt;</span> 评论管理 <span class="c-gray en">&gt;</span> 意见反馈 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+			<div class="text-c"> 日期范围：
+				<input type="text" onfocus="WdatePicker({maxDate:'#F{ $dp.$D(\'datemax\')||\'%y-%M-%d\' }'})" id="datemin" class="input-text Wdate" style="width:120px;">
+				-
+				<input type="text" onfocus="WdatePicker({minDate:'#F{ $dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate" style="width:120px;">
+				<input type="text" class="input-text" style="width:250px" placeholder="输入关键词" id="" name="">
+				<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜意见</button>
+			</div>
+			<div class="cl pd-5 bg-1 bk-gray mt-20">
+				{if condition="$Think.session.menu_permission.Comment['4'] eq '1'"}
+				<a href="javascript:;" onclick="comment_reset()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量恢复</a> 
+				{/if}
+				<span class="r">共有数据：<strong>{$count}</strong> 条</span> </div>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort">
+					<thead>
+						<tr class="text-c">
+							<th width="60">序号</th>
+							<th width="60">用户名</th>
+							<th>留言内容</th>
+							<th width="60">状态</th>
+							<th width="100">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{volist name="list" id="vo"}
+						<tr class="text-c">
+							<td>{$vo.id}</td>
+							<td>
+								<a href="javascript:;" onclick="comment_show('查看界面','{:url("Comment/show",['id'=>$vo['id']])}','900','500')">{$vo.name}</a>
+							</td>
+							<td class="text-l">
+								<div class="c-999 f-12">
+									<i class="text-primary">{$vo.name}</i> 
+									<span class="ml-20"><time>{$vo.create_time}</time></span> 
+									<span class="ml-20">{$vo.tel}</span><span class="ml-20">{$vo.email}</span>
+								</div>
+								<div class="c-999 f-12">
+									{$vo.company}
+									<span class="ml-20">{$vo.title}</span>
+								</div>
+								<div>{$vo.content}</div>
+							</td>
+							<td class="td-status">
+								{if condition="$vo.status eq  '已回复'"}
+									<span class="label label-success radius">{$vo.status}</span>
+								{elseif condition="$vo.status eq  '待回复'" /}
+									<span class="label label-warning radius">{$vo.status}</span>
+									{else /}
+									<span class="label label-danger radius">{$vo.status}</span>
+								{/if}
+							</td>
+							<td class="td-manage">
+								{if condition="$vo.status neq '已回复'"}
+								{if condition="$Think.session.menu_permission.Comment['3'] eq '1'"}
+								<a style="text-decoration:none" class="ml-5" onClick="comment_feedback('回复界面','{:url("Comment/edit",['id'=>$vo['id']])}','800','640')" href="javascript:;" title="回复"><i class="Hui-iconfont">&#xe6df;</i></a> 
+								{/if}
+								<a style="text-decoration:none" onClick="comment_stop(this,{$vo.id})" href="javascript:;" title="处理"><i class="Hui-iconfont">&#xe6de;</i></a> 
+								{/if}
+								{if condition="$Think.session.menu_permission.Comment['2'] eq '1'"}
+								<a title="删除" href="javascript:;" onclick="comment_del(this,{$vo.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i>
+								{/if}
+								</a>
+							</td>
+						</tr>
+						{/volist}
+					</tbody>
+				</table>
+				{$page}
+			</div>
+		</article>
+	</div>
+</section>
+{include file='public/footer' /}
+
+<!--请在下方写此页面业务相关的脚本-->
+{include file='public/body_js' /}
+<script type="text/javascript">
+/*用户-查看*/
+function comment_show(title,url,w,h)
+{
+	layer_show(title,url,w,h);
+}
+/*管理员回复疑问*/
+function comment_feedback(title,url,w,h)
+{
+	layer_show(title,url,w,h);
+}
+/*用户-停用*/
+function comment_stop(obj,id){
+	layer.confirm('客户的疑问得到回复了吗？',function(index)
+	{
+		$.get(
+			"{:url('Comment/setStatus')}",
+			{id:id},
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已回复</span>');
+					$(obj).remove();
+					layer.msg(data.msg,{icon: 6,time:1000});  
+					window.location.reload();    			
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			},'json'
+		);
+	});
+}
+
+/*用户-删除*/
+function comment_del(obj,id)
+{
+	layer.confirm('确认要删除吗？',function(index)
+	{
+		$.get(
+			"{:url('Comment/delete')}",
+			{id:id},
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					$(obj).parents("tr").remove();
+					layer.msg('已删除!',{icon:1,time:1000});
+					var timer1=window.setInterval(function()
+                     {
+                        window.clearInterval(timer1);
+                        window.location.reload();               //重新加载页面,显示所有数据
+                     },1010);        			
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			},'json'
+		);
+	});
+}
+/*图片-恢复*/
+function comment_reset()
+{
+	layer.confirm('确认要恢复吗？', function(){
+		//$(selector).get(url,data,success(response,status,xhr),dataType)
+		$.get(
+			"{:url('Comment/reset')}",
+			function(data)
+			{
+				if(data.code == 200)
+				{
+					layer.msg(data.msg, {icon: 6, time: 1000}); //消息弹层1秒后消失
+					var timer1=window.setInterval(function()
+                     {
+                        window.clearInterval(timer1);
+                        window.location.reload();                //重新加载页面,显示所有数据
+                     },1010);        			
+				}
+				else
+				{
+					layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+				}
+			},'json'
+		);
+	});
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

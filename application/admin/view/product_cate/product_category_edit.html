@@ -1,0 +1,129 @@
+{include file='public/title' /}
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-category-edit">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>所属分类：</label>
+			<div class="formControls col-xs-8 col-sm-9" > 
+				<input type="text" class="input-text" value="{$list.mid}" placeholder="" id="cateMid" name="cateMid" hidden="true">
+				<input type="text" class="input-text" value="{$ftitle}" placeholder="" id="cateFid" name="cateFid" readonly="true" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>分类名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$list.name}" placeholder="" id="cateName" name="cateName" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>控制器名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$list.controller}" placeholder="" id="cateController" name="cateController" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>方法名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$list.method}" placeholder="" id="cateMethod" name="cateMethod" style="width:463px;">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">是否锁定：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				{if condition="$list.status eq '解锁'"}
+					<div class="radio-box">
+						<input type="radio" id="cateStatus" name="cateStatus"  value="0" checked>
+						<label>解锁</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="cateStatus" name="cateStatus" value="1">
+						<label>锁定</label>
+					</div>
+				{else /}
+					<div class="radio-box">
+						<input type="radio" id="cateStatus" name="cateStatus"  value="0">
+						<label>解锁</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="cateStatus" name="cateStatus" value="1" checked>
+						<label>锁定</label>
+					</div>
+				{/if}
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">是否显示：</label>
+			<div class="formControls skin-minimal col-xs-8 col-sm-9">
+				{if condition="$list.ishidden eq '显示'"}
+					<div class="radio-box">
+						<input type="radio" id="cateIshidden" name="cateIshidden" value="0" checked>
+						<label">显示</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="cateIshidden" name="cateIshidden" value="1" >
+						<label">隐藏</label>
+					</div>
+				{else /}
+					<div class="radio-box">
+						<input type="radio" id="cateIshidden" name="cateIshidden" value="0">
+						<label">显示</label>
+					</div>
+					<div class="radio-box">
+						<input type="radio" id="cateIshidden" name="cateIshidden" value="1" checked>
+						<label">隐藏</label>
+					</div>
+				{/if}
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-3" >
+				<input class="btn btn-primary radius disabled" type="button" id="btn_submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript">
+	//防止用户无数据提交;每次修改触发此函数
+	$("#form-category-edit").change(function()
+	{
+		$("#btn_submit").removeClass('disabled');
+	});
+
+	$("#btn_submit").click(function()
+	{
+		$("#btn_submit").attr("disabled",true);
+		$.ajax({
+			type:"POST",
+			url:"{:url('ProductCate/update')}",
+			data:$("#form-category-edit").serialize(),
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.code == 400)
+				{
+					layer.msg(data.msg, {icon: 2, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+				if(data.code ==200)
+				{
+					layer.msg(data.msg, {icon: 1, time: 1000}); //消息弹层1秒后消失
+                    var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.replace(location.href);
+                    },1010);
+				}
+			}
+		});
+	});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

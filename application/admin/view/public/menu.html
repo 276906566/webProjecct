@@ -1,0 +1,39 @@
+<aside class="Hui-aside">
+	<div class="menu_dropdown bk_2">
+		<dl>
+		{volist name="$Think.session.user_menu" id="vo"}
+			{if condition="$vo.son"}
+				{if condition="$vo['father']['checked'] eq '1'"}
+				<dt>
+					<i class="Hui-iconfont">{$vo['father']['pic']}</i> {$vo['father']['name']}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+				</dt>
+				<dd>
+					{volist name="vo.son" id="svo"}
+					{if condition="$svo['checked'] eq '1'"}
+		                {if condition="$svo.hidden eq '显示'"}
+			                <ul>
+				                {if condition="$svo.status eq '解锁'"}
+				                	<li><a href="{:url($svo['controller'].'/'.$svo['method'])}" title="{$svo.name}">{$svo.name}</a></li>
+				                {else /}
+				                	<li><a href="javascript:void(0);" src="" title="{$svo.name}">{$svo.name}</a></li>
+				                {/if}
+				            </ul>	
+		               {/if}
+		            {/if}
+		            {/volist}	
+				</dd>
+				{/if}
+			{else /}
+				{if condition="$vo['father']['checked'] eq '1'"}
+					<dt>
+						<i class="Hui-iconfont">{$vo['father']['pic']}</i> {$vo['father']['name']}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+					</dt>
+					<dd>
+					</dd>
+				{/if}
+			{/if}
+		{/volist}
+		</dl>
+	</div>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>

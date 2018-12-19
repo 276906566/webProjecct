@@ -1,0 +1,44 @@
+﻿{include file='public/header' /}
+<body style='background:#eeeeee url(__STATIC__/index/images/bg.jpg) repeat scroll 0% 0%'>
+	<div id='contain' style='width:1002px;margin:0px auto;padding:0px'>
+		{include file='public/top' /}
+		<div id='content' style='width:1002px;height:517px;background:url(__STATIC__/index/images/cbg.png) repeat-y;margin:0px auto'>
+			{include file='public/navLeft' /}
+			{include file='public/location' /}
+			<!-- 文章正文 -->
+			<div id='pdv_16931' class='pdv_class'  title='' style='width:718px;height:299px;top:94px;left:247px; z-index:6'>
+				<div id='spdv_16931' class='pdv_content' style='overflow:visible;width:100%;'>
+					<div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+						<div style="height:25px;margin:1px;display:none;background:;">
+							<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+							</div>
+							<div style="float:right;margin-right:10px;display:none">
+								<a href="-1" style="line-height:25px;color:">更多</a>
+							</div>
+						</div>
+						<div style="padding:0px">
+							<link href="__STATIC__/index/css/newscontent.css" rel="stylesheet" type="text/css" />
+							<div id="newscontent">
+								<div class="newstitle">{$data.title}</div>
+								<div class="info">
+									作者：{$data.author} &nbsp;&nbsp; 发布于：{$data.update_time} 
+								</div>
+								<div id="memo" class="memo" style="display:block">
+									<span style="color:#ff6600">摘要：</span>{$data.keywords}
+								</div>
+								<div id="con" class="con">
+									{$data.content}
+								</div>
+								<div id="contentpages">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{include file='public/bottom' /}
+	</div>
+	{include file='public/extend' /}
+</body>
+</html>

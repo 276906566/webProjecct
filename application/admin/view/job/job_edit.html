@@ -1,0 +1,181 @@
+{include file='public/title' /}
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-job-edit">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>职位名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$data.id}" id="id" name="id" hidden="true">
+				<input type="text" class="input-text" value="{$data.position}" id="position" name="position">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>职位类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<span class="select-box">
+				  <select class="select" size="1" name="type" id="type">
+				    <option value="0">兼职</option>
+				    <option value="1">全职</option>
+				  </select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>需求数量：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$data.number}" id="number" name="number">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>工作地点：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$data.place}" id="place" name="place">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>学历要求：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<span class="select-box">
+				  <select class="select" size="1" name="degree" id="degree">
+				  	<option value="0">高中</option>
+				    <option value="1">中专</option>
+					<option value="2">大专</option>
+					<option value="3">本科</option>
+					<option value="4">研究生</option>
+					<option value="5">博士</option>
+				  </select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>薪水范围：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$data.pay}" id="pay" name="pay">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系人员：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<input type="text" class="input-text" value="{$data.contacts}" id="contacts" name="contacts">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>联系电话：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<input type="text" class="input-text" value="{$data.tel}" id="tel" name="tel">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>邮箱地址：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<input type="text" class="input-text" value="{$data.email}" id="email" name="email">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>职位描述：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="position: relative; width: 550px;">
+				<pre style="display:block; visibility:hidden;"><span>{$data.dec}</span><br></pre>
+				<textarea name="dec" id="dec" class="textarea" style="position:absolute; top:0; height:100%;">{$data.dec}</textarea>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>职位要求：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<script id="editor" name="require" type="text/plain" style="width:100%;height:400px;">{$data.require}</script> 
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-secondary radius" type="button" id="save_btn"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+$(function(){	
+	var ue = UE.getEditor('editor');
+});
+</script>
+<script>
+	var select = document.getElementById('type');
+	switch("{$data.type}")
+	{
+		case "兼职":
+			select.options[0].selected=true;
+			break;
+		case "全职":
+			select.options[1].selected=true;
+			break;
+	}
+</script>
+<script>
+	var select = document.getElementById('degree');
+	switch("{$data.degree}")
+	{
+		case "高中":
+			select.options[0].selected=true;
+			break;
+		case "中专":
+			select.options[1].selected=true;
+			break;
+		case "大专":
+			select.options[2].selected=true;
+			break;
+		case "本科":
+			select.options[3].selected=true;
+			break;
+		case "研究生":
+			select.options[4].selected=true;
+			break;
+		case "博士研究生":
+			select.options[5].selected=true;
+			break;
+	}
+</script>
+<script>
+$(function(){
+    $("#save_btn").click(function()
+    {
+        if($("#position").val() == "" || $("textarea[name=content]").val() == "" || $("#number").val() == "" || $("#place").val() == "" || $("#contacts").val() == "" || $("#tel").val() == "" || $("#email").val() == "")
+        {
+            alert("请完善信息");
+            return;
+        }
+        event.preventDefault();
+        var form  =document.getElementById('form-job-edit'),
+        formdata =  new FormData(form);
+        $.ajax({
+            url :"{:url('Job/update')}",
+            type:"POST",
+            data:formdata,
+            dataType:"json",
+            processData:false,
+            contentType:false,
+            success :function(data)
+            {
+                if(data.code==200)
+                {
+                    layer.msg(data.msg, {icon: 6, time: 1000}); //消息弹层1秒后消失
+					var timer1=window.setInterval(function()
+                    {
+                        window.clearInterval(timer1);
+                        window.location.reload();                //重新加载页面,显示所有数据
+                    },1010);        		
+                }
+                if(data.code==400)
+            	{
+                    layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+                    window.location.href="javascript:location.replace(location.href);";
+                }
+            },
+        });
+    });
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

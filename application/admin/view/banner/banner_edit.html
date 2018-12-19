@@ -1,0 +1,139 @@
+{include file='public/title' /}
+<body>
+<div class="page-container">
+	<form class="form form-horizontal" id="form-article-add" enctype="multipart/form-data" method="post" action="{:url('Banner/add')}">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>图片标题：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$list.id}" placeholder="" id="id" name="id" hidden="true">
+				<input type="text" class="input-text" value="{$list.tag}" placeholder="" id="tag" name="tag" hidden="true">
+				<input type="text" class="input-text" value="{$list.title}" placeholder="" id="title" name="title">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="tag" class="select" id="select_type" disabled="disabled">
+					{volist name="type" id="vo"}
+					<option value="{$vo.controller}">{$vo.title}</option>
+					{/volist}
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">链接地址：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$list.link}" placeholder="" id="link" name="link">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发布日期：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{ $dp.$D(\'datemax\')||\'%y-%M-%d\' }'})" id="datemin" name="start_time" value="{$list.start_time|date='Y-m-d H:i:s',###}" class="input-text Wdate">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>结束日期：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{ $dp.$D(\'datemin\') }'})" id="datemax" name="end_time" value="{$list.end_time|date='Y-m-d H:i:s',###}" class="input-text Wdate">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">关键词：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$list.keywords}" placeholder="" id="keywords" name="keywords">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">备注信息：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="des" id="des" cols="" rows="" class="textarea"  placeholder="" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！">{$list.des}</textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div class="uploader-thum-container">
+					<div id="fileList" class="uploader-list"></div>
+					 <input type="file" name="image" id="image" />
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="button" id="add_btn"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script>
+	var select = document.getElementById('select_type');
+	switch("{$list.tag}")
+	{
+		case "Company":
+			select.options[0].selected=true;
+			break;
+		case "News":
+			select.options[1].selected=true;
+			break;
+		case "Products":
+			select.options[2].selected=true;
+			break;
+		case "Application":
+			select.options[3].selected=true;
+			break;
+		case "Brand":
+			select.options[4].selected=true;
+			break;
+		case "Customer":
+			select.options[5].selected=true;
+			break;
+		case "Recruit":
+			select.options[6].selected=true;
+			break;
+	}
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#add_btn").click(function()
+        {
+            event.preventDefault();
+            var form  =document.getElementById('form-article-add'),
+            formdata =  new FormData(form);
+            $.ajax({
+                url :"{:url('Banner/save')}",
+                type:"POST",
+                data:formdata,
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success :function(data)
+                {
+                    if(data.code==200)
+                    {
+                        layer.msg(data.msg, {icon: 6, time: 1000}); //消息弹层1秒后消失
+						var timer1=window.setInterval(function()
+	                    {
+	                        window.clearInterval(timer1);
+	                        window.location.reload();                //重新加载页面,显示所有数据
+	                    },1010);        		
+                    }
+                    else
+                    {
+                        layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+                        window.location.href="javascript:location.replace(location.href);";
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

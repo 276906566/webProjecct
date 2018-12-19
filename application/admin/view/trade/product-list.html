@@ -1,0 +1,89 @@
+﻿{include file='public/title' /}
+<body>
+{include file='public/header' /}
+{include file='public/menu' /}
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 产品列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<div style="margin-left:150px;">
+			<div class="pd-20">
+				<div class="mt-20">
+					<table class="table table-border table-bordered table-bg table-hover table-sort" id="data_table">
+				        <thead>
+				          <tr class="text-c">
+				            <th width="40">序号</th>
+				            <th width="80">网络地址</th>
+				            <th width="60">原地址</th>
+				            <th width="60">目标地址</th>
+				            <th width="120">时间</th>
+				            <th>数据</th>
+				          </tr>
+				        </thead>
+				        <tbody>
+				          {volist name="datas" id="vo"}
+				          <tr class="text-c va-m">
+				            <td class="text-c">{$vo.id}</td>
+				            <td class="text-c">{$vo.sourceIp}</td>
+				            <td class="text-c">{$vo.sourceId}</td>
+				            <td class="text-c">{$vo.targetId}</td>
+				            <td class="text-c">{$vo.timeime|date="Y-m-d H:i:s",###}</td>
+				            <td class="text-l">{$vo.content}</td>
+				          </tr>
+				          {/volist}
+				        </tbody>
+				    </table> 
+				    <input type="button" name="save_btn" id="save_btn" value="ok" onClick="tijiao()"/>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{include file='public/footer' /}
+{include file='public/body_js' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script>
+	function tijiao()
+	{
+		var tableObj = document.getElementById('data_table');       //获取Table
+  		var length   = tableObj.rows.length;                        //获得Table下的行数 
+		var tempIndex=$("#curindex").val();
+		if(tempIndex>65532)
+        {
+        	tempIndex=0;
+        }
+        else
+        {
+        	tempIndex=tempIndex+6;
+        }
+		$.ajax({
+		    type:"POST",
+		    url:"{:url('Trade/reload')}",
+		    data:{index:tempIndex},
+		    dataType:"json",
+		    success:function(tempdata)
+		    {
+		        for(var i=0;i<length-1;i++)
+		        {
+		        	tableObj.deleteRow(1);  
+		        	var newRow = tableObj.insertRow(); 
+				    var col1   = newRow.insertCell(0); 
+				    col1.innerHTML = tempdata[i]['id']; 
+				    var col2   = newRow.insertCell(1); 
+				    col2.innerHTML = tempdata[i]['sourceIp']; 
+				    var col3   = newRow.insertCell(2); 
+				    col3.innerHTML = tempdata[i]['sourceId']; 
+				    var col4   = newRow.insertCell(3); 
+				    col4.innerHTML = tempdata[i]['targetId']; 
+				    var col5   = newRow.insertCell(4); 
+				    col5.innerHTML = tempdata[i]['timeime'];  
+				    var col6   = newRow.insertCell(5); 
+				    col6.innerHTML = tempdata[i]['content']; 
+		        }
+		    }
+		});
+	}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

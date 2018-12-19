@@ -1,0 +1,294 @@
+﻿{include file='public/header' /}
+<body style='background:#eeeeee url(__STATIC__/index/images/bg.jpg) repeat scroll 0% 0%'>
+  <div id='contain' style='width:1002px;margin:0px auto;padding:0px'>
+    {include file='public/top' /}
+    <div id='content' style='width:1002px;height:1380px;background:url(__STATIC__/index/images/cbg.png) repeat-y;margin:0px auto'>
+      {include file='public/navLeft' /}
+      {include file='public/location' /}
+      <!-- 职位信息详情 -->
+      <div id='pdv_16866' class='pdv_class'  title='' style='width:720px;height:412px;top:76px;left:253px; z-index:7'>
+        <div id='spdv_16866' class='pdv_content' style='overflow:visible;width:100%;'>
+          <div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+            <div style="height:25px;margin:1px;display:none;background:;">
+              <div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+              </div>
+              <div style="float:right;margin-right:10px;display:none">
+                <a href="-1" style="line-height:25px;color:">更多</a>
+              </div>
+            </div>
+            <div style="padding:0px">
+              <link href="__STATIC__/index/css/jobcontent.css" rel="stylesheet" type="text/css" />
+              <div id="jobcontent">
+                <div class="jobtit">
+                  <strong>基本要求</strong>
+                </div>
+                <div class="jobintro">
+                  <div>
+                    <label><strong>职位名称：</strong></label><span><label>{$jobone.position}</label></span>
+                  </div>
+                  <div>
+                    <label><strong>职位类型：</strong></label><span><label>{$jobone.type}</label></span>
+                  </div>
+                  <div>
+                    <label><strong>学历要求：</strong></label><span><label>{$jobone.degree}</label></span>
+                  </div>
+                  <div>
+                    <label><strong>薪水等级：</strong></label><span><label>{$jobone.pay}</label></span>
+                  </div>
+                  <div>
+                    <label><strong>招聘人数：</strong></label><span><label>{$jobone.number}</label></span>
+                  </div>
+                  <div>
+                    <label><strong>发布时间：</strong></label><span><label>{$jobone.create_time}</label></span>
+                  </div>
+                </div>
+                <div class="jobtit">
+                <strong>职位描述</strong>
+                </div>
+                <div class="jobintro">
+                  {$jobone.dec}
+                </div>
+                <div class="jobtit">
+                <strong>招聘要求</strong>
+                </div>
+                <div class="jobintro">
+                  {$jobone.require}
+                </div>
+                <div class="jobtit">
+                  <strong>联系方式</strong>
+                </div>
+                <div class="jobintro">
+                  <div>
+                    <label><strong>联系人员：</strong></label><span><label>{$jobone.contacts}</label></span>
+                  </div>
+                  <div>
+                    <label><strong>联系电话：</strong></label><span><label>{$jobone.tel}</label></span>
+                  </div>
+                  <div>
+                    <label><strong>电子邮件：</strong></label><span><label>{$jobone.email}</label></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 应聘申请表单 -->
+      <div id='pdv_16867' class='pdv_class'  title='应聘申请' style='width:716px;height:880px;top:498px;left:255px; z-index:5'>
+        <div id='spdv_16867' class='pdv_content' style='overflow:visible;width:100%;'>
+          <div class="pdv_border" style="margin:0;padding:0;height:100%;border:0px  solid;background:;">
+          	<div style="height:25px;margin:1px;display:block;background:#f5f5f5;">
+          		<div style="float:left;margin-left:6px;line-height:25px;font-weight:bold;color:">
+          		  应聘申请
+          		</div>
+          		<div style="float:right;margin-right:10px;display:none">
+          		  <a href="-1" style="line-height:25px;color:">更多</a>
+          		</div>
+          	</div>
+            <div style="padding:0px">
+              <link href="__STATIC__/index/css/jobform.css" rel="stylesheet" type="text/css" />
+              <script language="javascript" src="__STATIC__/index/js/jobform.js"></script>
+              <script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
+              <script type="text/javascript" src="__STATIC__/admin/lib/layer/2.4/layer.js"></script>
+              <script type="text/javascript" src="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+              <div  id="notice" class="noticediv"></div>
+              <form id="jobform" method="post" action="" name="jobform">
+                <table width="100%" border="0" cellspacing="0" cellpadding="3" >
+                  <tr> 
+                    <td width="80" align="right">姓　　名：</td>
+                    <td> 
+                      <input type="text" name="name" id="name" value="" class="input" style="width:399px" />
+                      <input type="text" name="pid" id="pid" value="{$jobone.id}" class="input" hidden="true" />
+                      <font style='color:red'>*</font> <div style="padding-top:3px;color:#666"></div>  
+                    </td>
+                  </tr>
+                  <tr> 
+                    <td width="80" align="right">性　　别：</td>
+                    <td> 
+                      <select name="sex" id="sex" style="width:405px">
+              		      <option value=0 >男</option>
+                        <option value=1 >女</option>
+                      </select>
+                      <font style='color:red'>*</font> <div style="padding-top:3px;color:#666"></div> </td>
+                  </tr>
+                  <tr> 
+                    <td width="80" align="right">出生日期：</td>
+                      <td> 
+                        <input type="text" onfocus="WdatePicker()" id="born" name="born" class="input-text Wdate" style="width:399px;">
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">婚姻状况：</td>
+                      <td> 
+                        <select name="marry" id=marry style="width:405px">
+                		      <option value=0 >未婚</option>
+                          <option value=1 >已婚</option>
+                        </select>
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div> 
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">毕业院校：</td>
+                      <td> 
+                        <input type="text" name="school" id="school" value="" class="input" style="width:399px" />
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">最高学历：</td>
+                      <td> 
+                        <select name="degree" id=degree style="width:405px">
+                          <option value=0 >高中</option>
+                          <option value=1 >中专</option>
+                          <option value=2 >大专</option>
+                          <option value=3 >本科</option>
+                          <option value=4 >研究生</option>
+                          <option value=5 >博士研究生</option>
+                        </select>
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">毕业专业：</td>
+                      <td> 
+                        <input type="text" name="major" id="major" value="" class="input" style="width:399px" />
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">毕业时间：</td>
+                      <td> 
+                         <input type="text" onfocus="WdatePicker()" id="endtime" name="endtime" class="input-text Wdate" style="width:399px;">
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">QQ号码：</td>
+                      <td> 
+                        <input type="text" name="qq" id="qq" value="" class="input" style="width:399px" />
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">手机号码：</td>
+                      <td> 
+                        <input type="text" name="tel" id="tel" value="" class="input" style="width:399px" />
+                         <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">通信地址：</td>
+                      <td> 
+                        <input type="text" name="address" id="adress" value="" class="input" style="width:399px" />
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">电子邮箱：</td>
+                      <td> 
+                        <input type="text" name="email" id="email" value="" class="input" style="width:399px" />
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">专业特长：</td>
+                      <td> 
+                        <input type="text" name="speciality" id="speciality" value="" class="input" style="width:399px" />
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">工作经历：</td>
+                      <td> 
+                        <textarea name="work" id="work"  rows="10" class="textarea" style="width:399px" ></textarea>
+                        <font style='color:red'>*</font> 
+                        <div style="padding-top:3px;color:#666"></div>  
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="80" align="right">验 证 码：</td>
+                      <td>
+                        <div style="height:38px;white-space:nowrap;float:left;margin-right:1px">
+                          <input class="input" type="text" name="ImgCode" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="" style="width:150px;" />
+                        </div>
+                        <div style="height:28px;white-space:nowrap;float:left">
+                          <img src="{:captcha_src()}" id="captcha_img" alt="captcha" onclick="captcha_refresh()" />
+                        </div>
+                      </td>
+                    </tr>
+                	  <tr> 
+                      <td width="80" align="right"></td>
+                      <td></td>
+                    </tr>
+                    <tr> 
+                      <td width="80" align="right">&nbsp;</td>
+                      <td height="30">
+                        <input type="button" name="apply_btn" id="apply_btn" value="提交" class="submit">
+                    </td>
+                  </tr>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {include file='public/bottom' /}
+  </div>
+  {include file='public/extend' /}
+</body>
+<script>
+  $(function()
+  {
+    $("#apply_btn").click(function()
+    {
+      if(($("#name").val() == "") ||($("#born").val() == "")||($("textarea[name=work]").val() == "")||($("#tel").val() == "")||($("#email").val() == "")||($("#school").val() == "")||($("#major").val() == "")||($("#endtime").val() == "")||($("#address").val() == "")||($("#work").val() == ""))
+      {
+        alert("信息不完整");
+        return;
+      }
+      $.ajax({
+        type:"POST",
+        url:"{:url('Job/join')}",
+        data:$('#jobform').serialize(),
+        dataType:"json",
+        success:function(data)
+        {
+          if(data.code == 200)
+          {
+            layer.msg('谢谢您的关注，我们会及时给您回复!',{icon:1,time:3000});
+      var timer1=window.setInterval(function()
+             {
+                window.clearInterval(timer1);
+                window.location.reload();               //重新加载页面,显示所有数据
+             },3010);     
+          }
+          else
+          {    
+            layer.msg('应聘不能提交，请联系管理员，谢谢！', {icon: 5, time: 3000}); //消息弹层1秒后消失
+          }
+        }
+      });
+    });
+  })
+</script>
+<script>
+  function captcha_refresh()
+  {
+    var str = Date.parse(new Date())/1000;
+    $('#captcha_img').attr("src","/captcha?id="+str);
+  }
+</script>
+</html>

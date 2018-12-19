@@ -1,0 +1,46 @@
+<style type="text/css"> 
+	#mood{text-align: center;}
+	#mood ul li,#mood ul li div.pillar{display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline;}
+	#mood ul li{vertical-align: bottom}
+	#mood ul li{width:80px; padding-bottom:10px}
+	#mood ul li span{ font-size:12px}
+	#mood ul li label{ display:block;}
+	#mood ul li div.pillar{ height:20px; width:80px; background:url('/static/index/picture/mood/mood.gif') repeat-y 28px center; margin-bottom:5px;}
+	#mood ul li div.pass{background-position: -83px center;}
+</style>
+<div id="mood">
+	<ul>
+	{volist name="setting" id="vo"}
+	<li>
+		<span>{$data[$vo['FIELDS']]}</span>
+		<div class="pillar pass" style="height:{$vo['PER']}px;"></div>
+		<img src="{$vo['PIC']}"><br />
+		<label for="n{$vo['ID']}">{$vo['NAME']}<br />
+			<input type="radio" id="n{$vo['ID']}" name="n{$vo['ID']}" onclick="vote(this,{$vo['ID']})">
+		</label>
+	</li>
+	{/volist}
+	</ul>
+</div>
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript">
+function vote(obj,id) 
+{
+	$.get(
+		"{:url('Mood/poster')}",
+		{id:id},
+		function(data)
+		{
+			if(data.code == 200)
+			{
+				window.location.reload();                //重新加载页面,显示所有数据
+//				layer.msg(data.msg,{icon:6,time:1000});
+			}
+			else
+			{
+//				layer.msg(data.msg, {icon: 5, time: 1000}); //消息弹层1秒后消失
+			}
+		}
+	);
+}
+</script>                                                           
